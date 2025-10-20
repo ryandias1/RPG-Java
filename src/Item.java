@@ -25,10 +25,9 @@ public class Item {
         if(this.getClass()!= obj.getClass()) return false;
 
         Item outro = (Item) obj;
-        if(this.nome!= outro.nome) return false;
-        if(this.descricao!= outro.descricao) return false;
-        if(this.efeito!= outro.efeito) return false;
-        if(this.quantidade!= outro.quantidade) return false;
+        if(this.nome.equalsIgnoreCase(outro.nome)) return false;
+        if(this.descricao.equalsIgnoreCase(outro.descricao)) return false;
+        if(this.efeito.equalsIgnoreCase(outro.efeito)) return false;
 
         return true;
     }
