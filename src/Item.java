@@ -1,9 +1,13 @@
+// Classe Item
 public class Item implements Comparable<Item> {
+
+    // Atributos
     private String nome;
     private String descricao;
     private String efeito;
     private int quantidade;
 
+    // Construtor da classe Itens
     public Item (String nome, String descricao, String efeito, int quantidade){
         this.nome = nome;
         this.descricao = descricao;
@@ -11,11 +15,34 @@ public class Item implements Comparable<Item> {
         this.quantidade = quantidade;
     }
 
+    // Getters e Setters
+    public String getNome() {
+        return nome;
+    }
+
+    public String getDescricao() {
+        return descricao;
+    }
+
+    public String getEfeito() {
+        return efeito;
+    }
+
+    public int getQuantidade() {
+        return quantidade;
+    }
+
+    public void setQuantidade(int quantidade) {
+        this.quantidade = quantidade;
+    }
+
+    // Define como o texto será exibido
     @Override
     public String toString(){
         return "Nome: "+nome+", Descrição: "+descricao+", Efeito: "+efeito+", Quantidade: "+quantidade;
     }
 
+    // Para saber se dois itens são iguais
     @Override
     public boolean equals(Object obj){
         if (this==obj) return true;
@@ -32,6 +59,7 @@ public class Item implements Comparable<Item> {
         return true;
     }
 
+    // Comparar dois itens pelo nome, em ordem alfabética
     @Override
     public int compareTo(Item i){
         return this.nome.compareTo(i.nome);

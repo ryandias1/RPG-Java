@@ -1,5 +1,16 @@
+// Classe Inimigo (herda de Personagem)
 public class Inimigo extends Personagem{
-    public Inimigo(String nome, short pontosVida, short ataque, short defesa, short nivel, short inventario) {
+
+    // Construtor da classe Inimigo
+    public Inimigo(
+            String nome,
+            short pontosVida,
+            short ataque,
+            short defesa,
+            short nivel,
+            short inventario
+    ) {
+        // Chama o construtor da classe Personagem
         super(nome, pontosVida, ataque, defesa, nivel, inventario);
     }
 }
