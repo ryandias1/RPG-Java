@@ -1,4 +1,4 @@
-public class Item {
+public class Item implements Comparable<Item> {
     private String nome;
     private String descricao;
     private String efeito;
@@ -32,10 +32,10 @@ public class Item {
         return true;
     }
 
-    /*@Override
+    @Override
     public int compareTo(Item i){
-        if(this.nome)
-    }*/
+        return this.nome.compareTo(i.nome);
+    }
 }
 
 
