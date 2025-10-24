@@ -8,7 +8,7 @@ public class Mago extends Personagem {
             short ataque,
             short defesa,
             short nivel,
-            short inventario
+            Inventario inventario
     ) {
         // Chama o construtor da classe Personagem
         super(nome, pontosVida, ataque, defesa, nivel, inventario);
