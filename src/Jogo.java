@@ -25,7 +25,7 @@ public class Jogo {
         while (escolhaClasse == true) {
 
             // Personagens e suas características
-            System.out.println("\nEscolha sua classe:");
+            System.out.println("\nEscolha seu personagem");
             System.out.println("1 - Guerreiro");
             System.out.println("Alta vida (120 HP), boa defesa (20), ataque equilibrado (18).");
             System.out.println("Ideal para combates longos e resistência física.\n");
@@ -38,7 +38,7 @@ public class Jogo {
             System.out.println("Vida média (90 HP), defesa média (12), ataque ágil (20).");
             System.out.println("Especialista em ataques rápidos e precisão à distância.\n");
 
-            System.out.print("Digite o número da classe escolhida: ");
+            System.out.print("Digite o número do personagem escolhido: ");
 
             // Lê o número digitado pelo jogador e converte o texto digitado (String) em número inteiro (int)
             int opcao = Integer.parseInt(br.readLine());
@@ -114,9 +114,8 @@ public class Jogo {
                 }
                 else if (escolha == 2) {
                     System.out.println("Das sombras surge um zumbi!");
-                    // TODO: COLOCAR O BATALHAR AQUI E CRIAR O PERSONAGEM ZUMBI
-                    // Inimigo zumbi = new Inimigo("Zumbi", (short)50, (short)10, (short)5, (short)1, new Inventario());
-                    // batalhar(jogador, zumbi, br);
+                    Inimigo zumbi = new Inimigo("Zumbi", (short)50, (short)10, (short)5, (short)1, new Inventario());
+                    batalhar(jogador, zumbi, br);
                 }
                 else if (escolha == 3) {
                     // TODO: INVENTAR ALGO PARA POR AQUI
@@ -154,9 +153,8 @@ public class Jogo {
                 System.out.println("\nVocê chega à Vila Abandonada...");
                 System.out.println("As casas estão em ruínas e há marcas de magia nas paredes...");
                 System.out.println("De repente, um feiticeiro aparece!");
-                // TODO: COLOCAR O BATALHAR AQUI E CRIAR O PERSONAGEM FEITICEIRO
-                // Inimigo feiticeiro = new Inimigo("Feiticeiro", (short)70, (short)15, (short)8, (short)2, new Inventario());
-                // batalhar(jogador, feiticeiro, br);
+                Inimigo feiticeiro = new Inimigo("Feiticeiro", (short)70, (short)15, (short)8, (short)2, new Inventario());
+                batalhar(jogador, feiticeiro, br);
 
                 // Menu de ações durante a exploração
                 boolean continuar = menuExploracao(jogador, br);
@@ -169,9 +167,8 @@ public class Jogo {
                 System.out.println("\nVocê escala a Montanha Sombria...");
                 System.out.println("O chão treme sob seus pés... o dragão Rex desperta!");
                 System.out.println("Este é o combate final!");
-                // TODO: COLOCAR O BATALHAR AQUI E CRIAR O PERSONAGEM REX
-                // Inimigo dragao = new Inimigo("Rex", (short)150, (short)25, (short)15, (short)5, new Inventario());
-                // batalhar(jogador, dragao, br);
+                Inimigo dragao = new Inimigo("Rex", (short)150, (short)25, (short)15, (short)5, new Inventario());
+                batalhar(jogador, dragao, br);
 
                 // Menu de ações durante a exploração
                 boolean continuar = menuExploracao(jogador, br);
@@ -217,11 +214,28 @@ public class Jogo {
         return true; // true = continua o jogo
     }
 
+    public static void batalhar(Personagem jogador, Inimigo inimigo, BufferedReader br) throws IOException {
+        System.out.println("\n=== ⚔️ BATALHA CONTRA " + inimigo.nome.toUpperCase() + " ===");
+
+        jogador.batalhar(inimigo); // usa o método da classe Personagem
+
+        if (!jogador.estaVivo()) {
+            System.out.println("\n💀 Você foi derrotado... o Reino de Aurora cai nas sombras.");
+            System.out.println("Fim de jogo!");
+            System.exit(0); // encerra o jogo
+        } else {
+            System.out.println("\n✨ Você venceu a batalha contra " + inimigo.nome + "!");
+            System.out.println("Você encontra alguns itens entre os restos do inimigo...");
+
+            // Exemplo: o inimigo "solta" um item aleatório
+            jogador.inventario.adicionarItem(new Item("Poção de Cura", "Restaura parte da vida", "+20 HP", 1));
+            System.out.println("Você recebeu uma Poção de Cura!");
+        }
+    }
+
     // TODO: MÉTODOS PARA IMPLEMENTAR DEPOIS
     public static void usarItem(Personagem jogador, BufferedReader br) throws IOException {}
     // TODO: NA CLASSE DEIXAR ALGUNS ITENS ADICIONADOS E FAZER A LÓGICA DE QUE QUANDO FOR USAR ELE VÁ DIMINUINDO
     public static void fugir(Personagem jogador, BufferedReader br) throws IOException {}
     // public static void tomarDecisao(BufferedReader br) throws IOException {} // TODO: ?????
-
-    // TODO: MÉTODO BATALHAR
 }
