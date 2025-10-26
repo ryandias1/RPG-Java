@@ -1,6 +1,7 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Random;
 
 // Classe principal do Jogo
 public class Jogo {
@@ -203,7 +204,7 @@ public class Jogo {
                 batalhar(jogador, feiticeiro, br);
 
                 // Menu de ações durante a exploração
-                boolean continuar = menuExploracao(jogador, br);
+                boolean continuar = menuExploracao(jogador, br,"Vila Abandonada");
                 if (!continuar) {
                     explorando = false;
                 }
@@ -217,7 +218,7 @@ public class Jogo {
                 batalhar(jogador, dragao, br);
 
                 // Menu de ações durante a exploração
-                boolean continuar = menuExploracao(jogador, br);
+                boolean continuar = menuExploracao(jogador, br,"Montanha Sombria");
                 if (!continuar) {
                     explorando = false;
                 }
@@ -235,7 +236,7 @@ public class Jogo {
     }
 
     // Menu de ações durante a exploração
-    public static boolean menuExploracao(Personagem jogador, BufferedReader br) throws IOException {
+    public static boolean menuExploracao(Personagem jogador, BufferedReader br, String local) throws IOException {
         System.out.println("\nO que deseja fazer agora?");
         System.out.println("1 - Usar item do inventário");
         System.out.println("2 - Fugir");
@@ -247,7 +248,7 @@ public class Jogo {
             usarItem(jogador, br); // chama o método de usar item
         }
         else if (escolha == 2) {
-            fugir(jogador, br); // chama o método de fuga
+            fugir(jogador, br,local); // chama o método de fuga
         }
         else if (escolha == 3) {
             System.out.println("Encerrando o jogo. Até logo, aventureiro!");
@@ -282,6 +283,50 @@ public class Jogo {
     // TODO: MÉTODOS PARA IMPLEMENTAR DEPOIS
     public static void usarItem(Personagem jogador, BufferedReader br) throws IOException {}
     // TODO: NA CLASSE DEIXAR ALGUNS ITENS ADICIONADOS E FAZER A LÓGICA DE QUE QUANDO FOR USAR ELE VÁ DIMINUINDO
-    public static void fugir(Personagem jogador, BufferedReader br) throws IOException {}
-    // public static void tomarDecisao(BufferedReader br) throws IOException {} // TODO: ?????
+
+    public static void fugir(Personagem jogador, BufferedReader br, String local) throws IOException {
+        System.out.println("\n🏃 Você tenta fugir...");
+
+        Random random = new Random();
+        int rolagem = random.nextInt(6) + 1; // dado de 6 lados (1 a 6)
+
+        if (rolagem % 2 == 0) {
+            // Sucesso
+            System.out.println("Você consegue escapar com sucesso!");
+            System.out.println("Você respira aliviado e continua sua jornada.");
+        } else {
+            //  Falha
+            System.out.println("Você tropeça ao tentar fugir!");
+            System.out.println("O inimigo te alcança e acerta um golpe antes de você escapar!");
+
+            short dano = 10;
+            jogador.receberDano(dano);
+            System.out.println("☠️ Você perdeu " + dano + " pontos de vida. HP atual: " + jogador.pontosVida);
+
+            if (!jogador.estaVivo()) {
+                System.out.println("\n💀 Você não resistiu ao golpe durante a fuga...");
+                System.out.println("Fim de jogo!");
+                System.exit(0);
+            } else {
+                System.out.println("Mesmo ferido, você consegue se afastar do perigo.");
+            }
+        }
+
+        // Texto baseado no local
+        String esconderijo;
+        if (local.contains("Floresta")) {
+            esconderijo = "entre as árvores";
+        } else if (local.contains("Caverna")) {
+            esconderijo = "atrás de uma pedra";
+        } else if (local.contains("Vila")) {
+            esconderijo = "atrás de uma parede quebrada";
+        } else if (local.contains("Montanha")) {
+            esconderijo = "em uma fenda na rocha";
+        } else {
+            esconderijo = "em um canto seguro";
+        }
+
+        System.out.println("\nVocê se esconde " + esconderijo + " e retoma a exploração.");
+    }
+
 }
