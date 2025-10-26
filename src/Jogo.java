@@ -118,7 +118,45 @@ public class Jogo {
                     batalhar(jogador, zumbi, br);
                 }
                 else if (escolha == 3) {
-                    // TODO: INVENTAR ALGO PARA POR AQUI
+                    System.out.println("\nVocê segue pela trilha da direita...");
+                    System.out.println("O caminho é mais estreito e coberto por teias antigas.");
+                    System.out.println("O ar fica mais frio — um pressentimento ruim toma conta de você.");
+
+                    System.out.println("\nEnquanto avança, uma sombra se move entre as árvores...");
+                    System.out.println("De repente, um rugido agudo ecoa pela floresta!");
+                    System.out.println("Uma aranha gigante salta de um galho — seus olhos brilham em vermelho vivo!");
+
+                    Inimigo aranha = new Inimigo("Aranha da Névoa", (short)60, (short)12, (short)6, (short)1, new Inventario());
+                    batalhar(jogador, aranha, br);
+
+                    if (jogador.estaVivo()) {
+                        System.out.println("\nVocê respira ofegante enquanto o corpo da aranha se dissolve em névoa...");
+                        System.out.println("Entre os restos, algo brilha — um casulo preso em teias.");
+                        System.out.println("Dentro, você encontra um frasco misterioso.");
+
+                        int sorte = (int) (Math.random() * 2); // 0 ou 1, define o tipo de frasco
+
+                        if (sorte == 0) {
+                            System.out.println("Você abre o frasco e sente uma energia suave percorrer seu corpo!");
+                            jogador.pontosVida += 15;
+                            System.out.println("💖 Você recuperou 15 pontos de vida!");
+                            jogador.inventario.adicionarItem(new Item("Essência da Floresta", "Poção de cura natural", "+15 HP", 1));
+                            System.out.println("Você recebeu o item: Essência da Floresta!");
+                        } else {
+                            System.out.println("Ao abrir o frasco, uma fumaça negra se espalha...");
+                            System.out.println("Um veneno sutil atinge seu corpo!");
+                            jogador.pontosVida -= 10;
+                            System.out.println("☠️ Você perdeu 10 pontos de vida!");
+                            System.out.println("Mas... entre as teias, encontra um dente afiado da criatura.");
+                            jogador.inventario.adicionarItem(new Item("Dente da Aranha", "Parte da fera derrotada", "Pode ser usado em poções", 1));
+                            System.out.println("Você recebeu o item: Dente da Aranha!");
+                        }
+                    } else {
+                        System.out.println("\nVocê sente o veneno da aranha correr pelo corpo...");
+                        System.out.println("Tudo escurece... a floresta consome mais uma alma.");
+                        System.out.println("💀 Fim de jogo!");
+                        System.exit(0);
+                    }
                 }
                 else if (escolha == 5) {
                     System.out.println("\nEncerrando o jogo. Até logo, aventureiro!");
