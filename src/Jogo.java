@@ -147,6 +147,14 @@ public class Jogo {
                             System.out.println("Um veneno sutil atinge seu corpo!");
                             jogador.pontosVida -= 10;
                             System.out.println("☠️ Você perdeu 10 pontos de vida!");
+
+                            if(!jogador.estaVivo()) {
+                                System.out.println("\nVocê sente o veneno corroer suas forças...");
+                                System.out.println("Suas pernas fraquejam, e a escuridão toma conta da visão.");
+                                System.out.println("💀 O veneno foi forte demais... você sucumbe na floresta.");
+                                System.out.println("Fim de jogo!");
+                                System.exit(0);
+                            }
                             System.out.println("Mas... entre as teias, encontra um dente afiado da criatura.");
                             jogador.inventario.adicionarItem(new Item("Dente da Aranha", "Parte da fera derrotada", "Pode ser usado em poções", 1));
                             System.out.println("Você recebeu o item: Dente da Aranha!");
