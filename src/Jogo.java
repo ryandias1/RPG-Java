@@ -116,7 +116,7 @@ public class Jogo {
                 else if (escolha == 2) {
                     System.out.println("Das sombras surge um zumbi!");
                     Inimigo zumbi = new Inimigo("Zumbi", (short)50, (short)10, (short)5, (short)1, new Inventario());
-                    batalhar(jogador, zumbi, br);
+                    batalhar(jogador, zumbi, br,"Floresta Nebulosa");
                 }
                 else if (escolha == 3) {
                     System.out.println("\nVocê segue pela trilha da direita...");
@@ -128,9 +128,9 @@ public class Jogo {
                     System.out.println("Uma aranha gigante salta de um galho — seus olhos brilham em vermelho vivo!");
 
                     Inimigo aranha = new Inimigo("Aranha da Névoa", (short)60, (short)12, (short)6, (short)1, new Inventario());
-                    batalhar(jogador, aranha, br);
+                    boolean venceuAranha = batalhar(jogador, aranha, br, "Floresta Nebulosa");
 
-                    if (jogador.estaVivo()) {
+                    if (venceuAranha) {
                         System.out.println("\nVocê respira ofegante enquanto o corpo da aranha se dissolve em névoa...");
                         System.out.println("Entre os restos, algo brilha — um casulo preso em teias.");
                         System.out.println("Dentro, você encontra um frasco misterioso.");
@@ -149,24 +149,27 @@ public class Jogo {
                             jogador.pontosVida -= 10;
                             System.out.println("☠️ Você perdeu 10 pontos de vida!");
 
-                            if(!jogador.estaVivo()) {
+                            if (!jogador.estaVivo()) {
                                 System.out.println("\nVocê sente o veneno corroer suas forças...");
                                 System.out.println("Suas pernas fraquejam, e a escuridão toma conta da visão.");
                                 System.out.println("💀 O veneno foi forte demais... você sucumbe na floresta.");
                                 System.out.println("Fim de jogo!");
                                 System.exit(0);
                             }
+
                             System.out.println("Mas... entre as teias, encontra um dente afiado da criatura.");
                             jogador.inventario.adicionarItem(new Item("Dente da Aranha", "Parte da fera derrotada", "Pode ser usado em poções", 1));
                             System.out.println("Você recebeu o item: Dente da Aranha!");
                         }
                     } else {
-                        System.out.println("\nVocê sente o veneno da aranha correr pelo corpo...");
-                        System.out.println("Tudo escurece... a floresta consome mais uma alma.");
-                        System.out.println("💀 Fim de jogo!");
-                        System.exit(0);
+                        // Se o jogador fugiu
+                        if (jogador.estaVivo()) {
+                            System.out.println("\nPor sorte não foi dessa vez...");
+                        }
+                        // se morreu tentando fugir, o método batalhar já encerra o jogo com System.exit(0)
                     }
                 }
+
                 else if (escolha == 5) {
                     System.out.println("\nEncerrando o jogo. Até logo, aventureiro!");
                     explorando = false;
@@ -201,7 +204,7 @@ public class Jogo {
                 System.out.println("As casas estão em ruínas e há marcas de magia nas paredes...");
                 System.out.println("De repente, um feiticeiro aparece!");
                 Inimigo feiticeiro = new Inimigo("Feiticeiro", (short)70, (short)15, (short)8, (short)2, new Inventario());
-                batalhar(jogador, feiticeiro, br);
+                batalhar(jogador, feiticeiro, br,"Vila Abandonada");
 
                 // Menu de ações durante a exploração
                 boolean continuar = menuExploracao(jogador, br,"Vila Abandonada");
@@ -215,7 +218,7 @@ public class Jogo {
                 System.out.println("O chão treme sob seus pés... o dragão Rex desperta!");
                 System.out.println("Este é o combate final!");
                 Inimigo dragao = new Inimigo("Rex", (short)150, (short)25, (short)15, (short)5, new Inventario());
-                batalhar(jogador, dragao, br);
+                batalhar(jogador, dragao, br,"Montanha Sombria");
 
                 // Menu de ações durante a exploração
                 boolean continuar = menuExploracao(jogador, br,"Montanha Sombria");
@@ -239,18 +242,15 @@ public class Jogo {
     public static boolean menuExploracao(Personagem jogador, BufferedReader br, String local) throws IOException {
         System.out.println("\nO que deseja fazer agora?");
         System.out.println("1 - Usar item do inventário");
-        System.out.println("2 - Fugir");
-        System.out.println("3 - Encerrar jogo");
+        System.out.println("2 - Encerrar jogo");
 
         int escolha = Integer.parseInt(br.readLine());
 
         if (escolha == 1) {
             usarItem(jogador, br); // chama o método de usar item
         }
+
         else if (escolha == 2) {
-            fugir(jogador, br,local); // chama o método de fuga
-        }
-        else if (escolha == 3) {
             System.out.println("Encerrando o jogo. Até logo, aventureiro!");
             return false; // retorna false para encerrar o jogo
         }
@@ -261,24 +261,53 @@ public class Jogo {
         return true; // true = continua o jogo
     }
 
-    public static void batalhar(Personagem jogador, Inimigo inimigo, BufferedReader br) throws IOException {
+    public static boolean batalhar(Personagem jogador, Inimigo inimigo, BufferedReader br, String local) throws IOException {
         System.out.println("\n=== ⚔️ BATALHA CONTRA " + inimigo.nome.toUpperCase() + " ===");
 
-        jogador.batalhar(inimigo); // usa o método da classe Personagem
+        boolean venceu = jogador.batalhar(inimigo, br, local);
 
         if (!jogador.estaVivo()) {
             System.out.println("\n💀 Você foi derrotado... o Reino de Aurora cai nas sombras.");
             System.out.println("Fim de jogo!");
-            System.exit(0); // encerra o jogo
-        } else {
-            System.out.println("\n✨ Você venceu a batalha contra " + inimigo.nome + "!");
-            System.out.println("Você encontra alguns itens entre os restos do inimigo...");
-
-            // Exemplo: o inimigo "solta" um item aleatório
-            jogador.inventario.adicionarItem(new Item("Poção de Cura", "Restaura parte da vida", "+20 HP", 1));
-            System.out.println("Você recebeu uma Poção de Cura!");
+            System.exit(0);
         }
+
+        if (venceu) {
+            System.out.println("\n🏆 Você venceu a batalha contra " + inimigo.nome + "!");
+            System.out.println("Você vasculha o corpo do inimigo em busca de algo útil...");
+
+            // Sistema de Drop Aleatório
+            Random random = new Random();
+            boolean dropou = random.nextBoolean(); // 50% chance
+
+            if (dropou) {
+                int sorteio = random.nextInt(8) + 1;
+                Item itemDropado;
+
+                switch (sorteio) {
+                    case 1: itemDropado = new Item("Poção de Cura", "Recupera vida", "+20 HP", 1); break;
+                    case 2: itemDropado = new Item("Elixir de Energia", "Recupera energia mágica", "+15 MP", 1); break;
+                    case 3: itemDropado = new Item("Espada Enferrujada", "Arma simples", "+5 ataque", 1); break;
+                    case 4: itemDropado = new Item("Escudo Velho", "Fornece leve proteção", "+3 defesa", 1); break;
+                    case 5: itemDropado = new Item("Anel Misterioso", "Brilha com energia desconhecida", "???", 1); break;
+                    case 6: itemDropado = new Item("Flecha Antiga", "Usada por arqueiros lendários", "+10 precisão", 1); break;
+                    case 7: itemDropado = new Item("Essência Sombria", "Estranha energia do inimigo", "Usado em poções", 1); break;
+                    case 8: itemDropado = new Item("Fragmento de Cristal", "Reluz em tons azuis", "Material raro", 1); break;
+                    default: itemDropado = new Item("Item Desconhecido", "Você não sabe o que é isso", "???", 1);
+                }
+
+                System.out.println("O inimigo deixou cair: " + itemDropado.getNome() + "!");
+                jogador.inventario.adicionarItem(itemDropado);
+            } else {
+                System.out.println("O inimigo não deixou nenhum item para trás.");
+            }
+        }
+
+        return venceu;
     }
+
+
+
 
     // TODO: MÉTODOS PARA IMPLEMENTAR DEPOIS
     public static void usarItem(Personagem jogador, BufferedReader br) throws IOException {}
@@ -326,7 +355,7 @@ public class Jogo {
             esconderijo = "em um canto seguro";
         }
 
-        System.out.println("\nVocê se esconde " + esconderijo + " e retoma a exploração.");
+        System.out.println("\nVocê se esconde " + esconderijo + " por um certo tempo e logo retoma a exploração.");
     }
 
 }

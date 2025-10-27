@@ -1,3 +1,5 @@
+import java.io.BufferedReader;
+import java.io.IOException;
 import java.util.Random;
 
 // Classe Personagem (molde base para criar todos os personagens)
@@ -43,24 +45,65 @@ abstract class Personagem {
         }
     }
 
-    public void batalhar(Inimigo inimigo) {
-        System.out.println("\n⚔️ Início da batalha entre " + nome + " e " + inimigo.nome + "!\n");
+    public boolean batalhar(Inimigo inimigo, BufferedReader br, String local) throws IOException {
+        System.out.println("\n⚔️ Início da batalha entre " + nome + " e " + inimigo.nome + "!");
+        System.out.println("Local: " + local + "\n");
 
         while (this.estaVivo() && inimigo.estaVivo()) {
-            // turno do jogador
-            this.atacar(inimigo);
+            System.out.println("\n=== Seu turno ===");
+            System.out.println("1 - Atacar");
+            System.out.println("2 - Tentar fugir");
+            System.out.println("3 - Usar item");
+            System.out.print("Escolha uma ação: ");
+
+            int escolha = Integer.parseInt(br.readLine());
+
+            if (escolha == 1) {
+                this.atacar(inimigo);
+            }
+            else if (escolha == 2) {
+                Jogo.fugir(this, br, local);
+
+                // Se o jogador está vivo após tentar fugir, encerra batalha (fugiu com sucesso)
+                if (this.estaVivo()) {
+                    System.out.println("\nVocê escapou da batalha e deixa o inimigo para trás...");
+                    return false; // fugiu, não venceu
+                } else {
+                    // morreu tentando fugir
+                    return false;
+                }
+            }
+            else if (escolha == 3) {
+                Jogo.usarItem(this, br); // todo
+            }
+            else {
+                System.out.println("Opção inválida! Escolha novamente.");
+                continue;
+            }
+
+            // se o inimigo morreu, sai do loop
             if (!inimigo.estaVivo()) break;
 
             // turno do inimigo
+            System.out.println("\n=== Turno do inimigo ===");
             inimigo.atacar(this);
+
+            if (!this.estaVivo()) {
+                System.out.println("\n💀 Você foi derrotado pelo " + inimigo.nome + "...");
+                System.out.println("Fim de jogo!");
+                System.exit(0);
+            }
         }
 
-        if (this.estaVivo()) {
-            System.out.println("\n🏆 " + nome + " venceu a batalha!");
-        } else {
-            System.out.println("\n💀 " + nome + " foi derrotado por " + inimigo.nome + "...");
+        // Se o inimigo morreu + vitória
+        if (this.estaVivo() && !inimigo.estaVivo()) {
+            return true;
         }
+
+        // Caso contrário (fuga ou morte)
+        return false;
     }
+
 
     @Override
     public String toString() {
