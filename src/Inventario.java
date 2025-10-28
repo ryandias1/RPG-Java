@@ -10,6 +10,15 @@ public class Inventario {
     // Chamado toda vez que crio um novo inventário
     public Inventario() {
         this.itens = new ArrayList<>();
+
+        // Faca no inventário de todos os jogadores
+        Item facaInicial = new Item(
+                "Faca Inicial",
+                "Uma lâmina simples, mas confiável.",
+                "+5 ATQ",
+                1
+        );
+        this.itens.add(facaInicial);
     }
 
     // Construtor de cópia: cria um inventário igual ao atual (outro)
@@ -56,8 +65,10 @@ public class Inventario {
         itens.add(novoItem);
     }
 
-    // Método para remover um item do inventário
+    /// Remover um item do inventário
     public void removerItem(String nomeItem, int quantidade) {
+        // Remove espaços extras antes e depois do nome digitado
+        nomeItem = nomeItem.trim();
 
         // Percorre a lista de acordo com o tamanho dela (itens.size())
         for (int i = 0; i < itens.size(); i++) {
@@ -81,12 +92,23 @@ public class Inventario {
         System.out.println("Item não encontrado no inventário.");
     }
 
-    // Método para listar todos os itens do inventário
-    public void listarItens() {
-        // Percorre a lista de itens e mostra cada um na tela
+    /// Listar todos os itens do inventário
+    public boolean listarItens() {
+        if (itens.isEmpty()) {
+            System.out.println("\nSeu inventário está vazio.");
+            return false; // retorna falso se estiver vazio
+        }
+
+        System.out.println("\n=== ITENS NO INVENTÁRIO ===");
         for (Item item : itens) {
             System.out.println(item);
         }
+        System.out.println("==============================");
+        return true; // retorna true se tiver itens
+    }
+
+    public boolean estaVazio() {
+        return itens.isEmpty();
     }
 
     // Método para criar uma cópia independente do inventário atual

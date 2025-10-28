@@ -44,19 +44,14 @@ public class Item implements Comparable<Item> {
 
     // Para saber se dois itens são iguais
     @Override
-    public boolean equals(Object obj){
-        if (this==obj) return true;
-
-        if(obj==null) return false;
-
-        if(this.getClass()!= obj.getClass()) return false;
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
 
         Item outro = (Item) obj;
-        if(this.nome.equalsIgnoreCase(outro.nome)) return false;
-        if(this.descricao.equalsIgnoreCase(outro.descricao)) return false;
-        if(this.efeito.equalsIgnoreCase(outro.efeito)) return false;
-
-        return true;
+        return nome.equalsIgnoreCase(outro.nome)
+                && descricao.equalsIgnoreCase(outro.descricao)
+                && efeito.equalsIgnoreCase(outro.efeito);
     }
 
     // Comparar dois itens pelo nome, em ordem alfabética
