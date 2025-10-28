@@ -12,5 +12,9 @@ public class Mago extends Personagem {
     ) {
         // Chama o construtor da classe Personagem
         super(nome, pontosVida, ataque, defesa, nivel, inventario);
+
+        // No inventário de todo mago
+        Item pocaoInicial = new Item("Elixir do Vento Adormecido", "Um elixir antigo que invoca ventos frios dos vales místicos.", "impede ações do inimigo no próximo turno", 1);
+        this.inventario.adicionarItem(pocaoInicial);
     }
 }

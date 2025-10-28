@@ -10,15 +10,6 @@ public class Inventario {
     // Chamado toda vez que crio um novo inventário
     public Inventario() {
         this.itens = new ArrayList<>();
-
-        // Faca no inventário de todos os jogadores
-        Item facaInicial = new Item(
-                "Faca Inicial",
-                "Uma lâmina simples, mas confiável.",
-                "+5 ATQ",
-                1
-        );
-        this.itens.add(facaInicial);
     }
 
     // Construtor de cópia: cria um inventário igual ao atual (outro)

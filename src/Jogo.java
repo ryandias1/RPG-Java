@@ -113,7 +113,7 @@ public class Jogo {
                 if (escolha == 1) {
                     System.out.println("\nVocê segue pela trilha da esquerda...");
                     System.out.println("Das sombras surge um zumbi!");
-                    Inimigo zumbi = new Inimigo("Zumbi", (short)30, (short)8, (short)3, (short)1, new Inventario());
+                    Inimigo zumbi = new Inimigo("Zumbi", (short)20, (short)8, (short)3, (short)1, new Inventario());
                     batalhar(jogador, zumbi, br, "Floresta Nebulosa");
                 }
 
@@ -141,7 +141,7 @@ public class Jogo {
                 else if (escolha == 3) {
                     System.out.println("\nVocê tenta sair rapidamente da trilha...");
                     System.out.println("Mas uma fera te avista e ataca!");
-                    Inimigo lobo = new Inimigo("Lobo Sombrio", (short)35, (short)10, (short)4, (short)1, new Inventario());
+                    Inimigo lobo = new Inimigo("Lobo Sombrio", (short)45, (short)10, (short)4, (short)1, new Inventario());
                     batalhar(jogador, lobo, br, "Floresta Nebulosa");
                 }
 
@@ -165,7 +165,7 @@ public class Jogo {
 
                 // Explorar o interior da caverna
                 if (escolha == 1) {
-                    Inimigo troll = new Inimigo("Troll das Sombras", (short)20, (short)12, (short)6, (short)2, new Inventario());
+                    Inimigo troll = new Inimigo("Troll das Sombras", (short)30, (short)12, (short)6, (short)2, new Inventario());
                     batalhar(jogador, troll, br, "Caverna das Sombras");
                 }
                 else if (escolha == 2) {
@@ -239,6 +239,7 @@ public class Jogo {
             System.out.println("\nVocê venceu a batalha contra " + inimigo.nome + "!");
             System.out.println("Você vasculha o corpo do inimigo em busca de algo útil...");
 
+
             // Sistema de Drop Aleatório (sistema de sorteio para gerar números ou resultados aleatórios)
             Random random = new Random();
             boolean dropou = random.nextBoolean(); // Rola o dado para ver se encontra algo (50% chance)
@@ -251,13 +252,11 @@ public class Jogo {
                 // Menu de possibilidade
                 switch (sorteio) {
                     case 1: itemDropado = new Item("Poção de Cura", "Recupera vida", "+20 HP", 1); break;
-                    case 2: itemDropado = new Item("Elixir de Energia", "Recupera energia mágica", "+15 MP", 1); break;
-                    case 3: itemDropado = new Item("Espada Enferrujada", "Arma simples", "+5 ataque", 1); break;
-                    case 4: itemDropado = new Item("Escudo Velho", "Fornece leve proteção", "+3 defesa", 1); break;
-                    case 5: itemDropado = new Item("Anel Misterioso", "Brilha com energia desconhecida", "???", 1); break;
-                    case 6: itemDropado = new Item("Flecha Antiga", "Usada por arqueiros lendários", "+10 precisão", 1); break;
-                    case 7: itemDropado = new Item("Essência Sombria", "Estranha energia do inimigo", "Usado em poções", 1); break;
-                    case 8: itemDropado = new Item("Fragmento de Cristal", "Reluz em tons azuis", "Material raro", 1); break;
+                    case 2: itemDropado = new Item("Raiz de Mirtilha", "Recupera vida", "+8 HP", 1); break;
+                    case 3: itemDropado = new Item("Amuleto Guardião", "Fornece alta proteção", "+20 defesa", 1); break;
+                    case 4: itemDropado = new Item("Escudo Velho", "Fornece leve proteção", "+5 defesa", 1); break;
+                    case 5: itemDropado = new Item("Orbe do Desespero", "Libera uma onda de energia que causa dano aos inimigos", "+30 ataque", 1); break;
+                    case 6: itemDropado = new Item("Poção de Fúria", "Uma poção que aumenta a força", "+12 ataque", 1); break;
                     default: itemDropado = new Item("Item Desconhecido", "Você não sabe o que é isso", "???", 1);
                 }
 
@@ -265,6 +264,23 @@ public class Jogo {
                 jogador.inventario.adicionarItem(itemDropado);
             } else {
                 System.out.println("O inimigo não deixou nenhum item para trás.");
+            }
+
+            if (inimigo.nome.contains("Rex")){
+                jogador.nivel += 5;
+                System.out.println("\nVocê subiu 5 níveis! ⬆️");
+                } else if(inimigo.nome.contains("Zumbi")){
+                jogador.nivel += 1;
+                System.out.println("\nVocê subiu 1 nível! ⬆️");
+            } else if(inimigo.nome.contains("Troll das Sombras")){
+                jogador.nivel += 2;
+                System.out.println("\nVocê subiu 2 níveis! ⬆️");
+            } else if(inimigo.nome.contains("Lobo Sombrio")){
+                jogador.nivel += 3;
+                System.out.println("\nVocê subiu 3 níveis! ⬆️");
+            } else{
+                jogador.nivel += 1;
+                System.out.println("\n⬆Você subiu 1 nível! ⬆️");
             }
         }
         return venceu;

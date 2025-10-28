@@ -125,6 +125,7 @@ abstract class Personagem {
             if (this.estaVivo() && inimigo.estaVivo()) {
                 System.out.println("\nNinguém foi derrotado ainda... a batalha continua!");
             }
+
         }
 
         // VITÓRIA
