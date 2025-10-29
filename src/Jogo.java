@@ -382,7 +382,7 @@ public class Jogo {
 
             // Se tiver sorte de encontrar algo
             if (dropou) {
-                int sorteio = random.nextInt(8) + 1; // Sorteia um número aleatória de 1 a 8
+                int sorteio = random.nextInt(6) + 1;// Sorteia um número aleatória de 1 a 6
                 Item itemDropado; // Cria uma variável do tipo Item que vai guardar o item que o jogador ganhar
 
                 // Menu de possibilidade
