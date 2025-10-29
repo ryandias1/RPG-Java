@@ -1,5 +1,5 @@
 /// Classe Item (obrigatório tem um compareTo())
-public class Item implements Comparable<Item> {
+public class Item implements Comparable<Item>, Cloneable {
     private String nome;
     private String descricao;
     private String efeito;
@@ -67,6 +67,46 @@ public class Item implements Comparable<Item> {
     public int compareTo(Item i){
         return this.nome.compareTo(i.nome);
     }
+
+    // Construtor de cópia (cria um novo objeto Item idêntico ao modelo passado)
+    public Item(Item modelo) throws Exception
+    {
+        // Verifica se o modelo existe (evita copiar algo nulo)
+        if (modelo == null)
+            throw new Exception("Modelo ausente");
+
+        // Copiamos cada atributo do modelo original para o novo objeto
+        // (isso garante que o novo Item tem os mesmos valores, mas é um objeto independente)
+        this.nome       = modelo.nome;
+        this.descricao  = modelo.descricao;
+        this.efeito     = modelo.efeito;
+        this.quantidade = modelo.quantidade;
+    }
+
+
+
+    // Método clone() — cria e retorna uma cópia independente do item atual
+    @Override
+    public Object clone()
+    {
+        Item retorno = null; // variável que vai guardar a cópia criada
+
+        try
+        {
+            // Chama o construtor de cópia, passando o próprio objeto atual (this)
+            // Isso cria um novo Item com os mesmos dados do item original
+            retorno = new Item(this);
+        }
+        catch (Exception erro)
+        {
+            // Esse erro praticamente nunca acontece,
+            // pois o "this" (objeto atual) nunca é nulo
+        }
+
+        // Retorna o novo Item criado (cópia independente do original)
+        return retorno;
+    }
+
 }
 
 

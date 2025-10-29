@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 
 // Classe Inventário
-public class Inventario {
+public class Inventario implements Cloneable {
 
     // Criando uma lista chamada itens que vai guardar os objetos da classe Item
     private ArrayList<Item> itens;
@@ -10,33 +10,6 @@ public class Inventario {
     // Chamado toda vez que crio um novo inventário
     public Inventario() {
         this.itens = new ArrayList<>();
-    }
-
-    // Construtor de cópia: cria um inventário igual ao atual (outro)
-    public Inventario(Inventario outro) {
-
-        // Criamos uma variável chamada listaNormal que aponta para lista de itens do inventário original
-        ArrayList<Item> listaNormal = outro.itens;
-
-        // Criamos uma lista vazia que vai guardar os itens copiados
-        ArrayList<Item> listaCopia = new ArrayList<>();
-
-        // Percorre cada item da listaNormal (lista original)
-        for (Item item : listaNormal) {
-            // Cria um novo objeto Item com os mesmos valores do item original (cópia independente)
-            Item novoItem = new Item(
-                    item.getNome(),
-                    item.getDes     cricao(),
-                    item.getEfeito(),
-                    item.getQuantidade()
-            );
-
-            // Adiciono o item que acabou de copiar (novoItem) dentro da lista listaCopia
-            listaCopia.add(novoItem);
-        }
-
-        // Define que a lista oficial do novo inventário será a listaCopia
-        this.itens = listaCopia;
     }
 
     // Método para adicionar um item ao inventário
@@ -129,6 +102,7 @@ public class Inventario {
         return retorno;
     }
 
+    // Construtor de cópia: cria um inventário igual ao atual (outro)
     public Inventario(Inventario modelo) throws Exception {
         // Verifica se o modelo passado existe
         if (modelo == null)
@@ -140,9 +114,7 @@ public class Inventario {
         // Clonamos os itens um por um, pois Item é um objeto
         // e queremos uma cópia independente (deep copy)
         for (Item item : modelo.itens)
-            this.itens.add(item.clone());
+            this.itens.add((Item)item.clone());
     }
-
-
 
 }
