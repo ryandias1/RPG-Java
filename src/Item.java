@@ -1,13 +1,11 @@
-// Classe Item
+/// Classe Item (obrigatório tem um compareTo())
 public class Item implements Comparable<Item> {
-
-    // Atributos
     private String nome;
     private String descricao;
     private String efeito;
     private int quantidade;
 
-    // Construtor da classe Itens
+    // Construtor da classe Itens (chamado quando você cria um item)
     public Item (String nome, String descricao, String efeito, int quantidade){
         this.nome = nome;
         this.descricao = descricao;
@@ -15,7 +13,7 @@ public class Item implements Comparable<Item> {
         this.quantidade = quantidade;
     }
 
-    // Getters e Setters
+    // Getters (acessar os dados)
     public String getNome() {
         return nome;
     }
@@ -32,11 +30,12 @@ public class Item implements Comparable<Item> {
         return quantidade;
     }
 
+    // Setter (alterar os dados)
     public void setQuantidade(int quantidade) {
         this.quantidade = quantidade;
     }
 
-    // Define como o texto será exibido
+    // toString do Item
     @Override
     public String toString(){
         return "Nome: "+nome+", Descrição: "+descricao+", Efeito: "+efeito+", Quantidade: "+quantidade;
@@ -45,10 +44,19 @@ public class Item implements Comparable<Item> {
     // Para saber se dois itens são iguais
     @Override
     public boolean equals(Object obj) {
-        if (this == obj) return true;
-        if (obj == null || getClass() != obj.getClass()) return false;
 
+        // Verifica se são exatamente o mesmo na memória
+        if (this == obj)
+            return true; // Retorna true e não compara (é o mesmo objeto)
+
+        // Verifica se obj é null e se as classe são diferentes
+        if (obj == null || getClass() != obj.getClass())
+            return false; // Não são iguais (classes diferentes)
+
+        // Garante que agora pode tratar obj como um Item
         Item outro = (Item) obj;
+
+        // Compara nome, descrição e efeito ignorando maiúsculas
         return nome.equalsIgnoreCase(outro.nome)
                 && descricao.equalsIgnoreCase(outro.descricao)
                 && efeito.equalsIgnoreCase(outro.efeito);

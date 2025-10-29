@@ -170,7 +170,7 @@ abstract class Personagem {
             this.turnosCongelado--;
     }
 
-    // toString
+    // toString do personagem
     @Override
     public String toString() {
         return "\nNome: " + nome +
@@ -180,11 +180,4 @@ abstract class Personagem {
                 "\nNível: " + nivel +
                 "\n";
     }
-
-    /*
-    @Override
-    public String toString() {
-        return nome + " [HP=" + pontosVida + ", Atk=" + ataque + ", Def=" + defesa + ", Nível=" + nivel + "]";
-    }
-    */
 }

@@ -69,11 +69,7 @@ public class Jogo {
 
         // Mostra status iniciais do personagem
         System.out.println("\n=== Status do Personagem ===");
-        System.out.println("Classe: " + jogador.getClass().getSimpleName());
-        System.out.println("Vida: " + jogador.pontosVida);
-        System.out.println("Ataque: " + jogador.ataque);
-        System.out.println("Defesa: " + jogador.defesa);
-        System.out.println("Nível: " + jogador.nivel);
+        System.out.println(jogador);
         System.out.println("============================");
 
         if (jogador == null) {
@@ -132,6 +128,10 @@ public class Jogo {
 
                 System.out.println("\nVocê entrou na Floresta Nebulosa.");
                 System.out.println("O ar é denso e cheio de névoa... algo se move entre as árvores.\n");
+
+                // Mostra status atual do personagem ao entrar na área
+                System.out.println("\n✨ Status atual antes de explorar:");
+                System.out.println(jogador);
 
                 while (explorandoFloresta) {
                     System.out.println("\n=== Trilhas da Floresta Nebulosa ===");
@@ -214,6 +214,9 @@ public class Jogo {
                 System.out.println("\nVocê entrou na Caverna das Sombras.");
                 System.out.println("O ar é pesado e o som de gotas d'água ecoa pelas paredes úmidas...\n");
 
+                System.out.println("\nStatus atual antes de explorar:");
+                System.out.println(jogador);
+
                 while (explorandoCaverna) {
                     System.out.println("\n=== Setores da Caverna das Sombras ===");
 
@@ -288,6 +291,10 @@ public class Jogo {
                 }
 
                 System.out.println("\nVocê chega à Vila Abandonada...");
+
+                System.out.println("\nStatus atual antes de explorar:");
+                System.out.println(jogador);
+
                 System.out.println("As casas estão em ruínas e há marcas de magia nas paredes...");
                 System.out.println("Um frio percorre sua espinha... a energia sombria ainda paira no ar.");
                 System.out.println("De repente, uma explosão mágica atinge o chão perto de você!");
@@ -322,6 +329,10 @@ public class Jogo {
                 }
 
                 System.out.println("\nVocê chegou à Montanha Sombria. O ar é pesado e o chão treme sob seus pés...");
+
+                System.out.println("\nStatus atual antes da batalha final:");
+                System.out.println(jogador);
+
                 System.out.println("O dragão Rex te aguarda no topo da montanha!");
 
                 Inimigo dragao = new Inimigo("Rex", (short)90, (short)20, (short)10, (short)5, new Inventario());
@@ -375,6 +386,9 @@ public class Jogo {
             System.out.println("\nVocê venceu a batalha contra " + inimigo.nome + "!");
             System.out.println("Você vasculha o corpo do inimigo em busca de algo útil...");
 
+            // Mostra status atualizado do jogador após a luta
+            System.out.println("\nSeu estado atual após a batalha:");
+            System.out.println(jogador);
 
             // Sistema de Drop Aleatório (sistema de sorteio para gerar números ou resultados aleatórios)
             Random random = new Random();
@@ -494,7 +508,7 @@ public class Jogo {
             }
 
             else {
-                System.out.println("Você usa o item" + nomeItem + ", mas nada acontece... talvez seu poder ainda seja desconhecido.\n");
+                System.out.println("Você usa o item " + nomeItem + ", mas nada acontece... talvez seu poder ainda seja desconhecido.\n");
             }
 
             jogador.inventario.removerItem(nomeItem, 1);
