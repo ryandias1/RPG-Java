@@ -26,7 +26,7 @@ public class Inventario {
             // Cria um novo objeto Item com os mesmos valores do item original (cópia independente)
             Item novoItem = new Item(
                     item.getNome(),
-                    item.getDescricao(),
+                    item.getDes     cricao(),
                     item.getEfeito(),
                     item.getQuantidade()
             );
@@ -116,18 +116,33 @@ public class Inventario {
     // Método para criar uma cópia independente do inventário atual
     @Override
     public Object clone() {
+        Inventario retorno = null;
 
-        // Variável que vai guardar o novo inventário criado (definido como vazio)
-        Inventario inventarioCopiado = null;
-
-        try {
-            // Crie um novo inventário do zero, usando o construtor copia da classe inventário e adicione a inventarioCopiado
-            inventarioCopiado = new Inventario(this);
+        try
+        {
+            // Cria um novo inventário usando o construtor de cópia
+            retorno = new Inventario(this);
         }
-        catch (Exception erro) {
-            System.out.println("Erro ao clonar inventário!");
-        }
+        catch (Exception erro)
+        {} // sei que o this nunca será null, então o único erro possível é improvável
 
-        return inventarioCopiado;
+        return retorno;
     }
+
+    public Inventario(Inventario modelo) throws Exception {
+        // Verifica se o modelo passado existe
+        if (modelo == null)
+            throw new Exception("Modelo ausente");
+
+        // Cria uma nova lista de itens (independente da original)
+        this.itens = new ArrayList<>();
+
+        // Clonamos os itens um por um, pois Item é um objeto
+        // e queremos uma cópia independente (deep copy)
+        for (Item item : modelo.itens)
+            this.itens.add(item.clone());
+    }
+
+
+
 }
