@@ -102,6 +102,17 @@ public class Inventario {
         return itens.isEmpty();
     }
 
+
+    // Verifica se um item com o nome informado existe no inventário
+    public boolean temItem(String nomeItem) {
+        for (Item item : itens) {
+            if (item.getNome().equalsIgnoreCase(nomeItem.trim())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     // Método para criar uma cópia independente do inventário atual
     @Override
     public Object clone() {

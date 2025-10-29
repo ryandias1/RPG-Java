@@ -1,7 +1,5 @@
-// Classe Inimigo (herda de Personagem)
+/// Classe Inimigo
 public class Inimigo extends Personagem{
-
-
 
     // Construtor da classe Inimigo
     public Inimigo(

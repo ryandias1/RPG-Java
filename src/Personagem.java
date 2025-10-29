@@ -22,12 +22,12 @@ abstract class Personagem {
         this.inventario = inventario;
     }
 
-    ///  Verifica se está vivo
+    // Verifica se está vivo
     public boolean estaVivo() {
-        return pontosVida > 0;
+        return pontosVida > 0; // Retorna true
     }
 
-    ///  Recebe dano
+    // Recebe dano
     public void receberDano(short dano) {
         pontosVida -= dano; // Diminui a vida
 
@@ -37,29 +37,34 @@ abstract class Personagem {
         }
     }
 
-    /// Atacar (Personagem -> Inimigo)
+    // Atacar personagem
     public void atacar(Personagem alvo) {
 
         // Objeto Random que gera números aleatórios
         Random random = new Random();
-        short rolagem = (short) (random.nextInt(6) + 1); // Dado de 6 lados
-        short poderTotal = (short) (ataque + rolagem); // Soma o poder do personagem com o valor da rolagem
+        short rolagem = (short) (random.nextInt(6) + 1); // Dado de 6 lados (5 + 1)
+        short poderTotal = (short) (ataque + rolagem); // Soma o ataque do personagem + rolagem do dado resultando o poder total dele
 
-        System.out.println(nome + " ataca " + alvo.nome + " (rolagem: " + rolagem + ", poder total: " + poderTotal + ")");
+        System.out.println("\n" + nome + " parte para o ataque contra " + alvo.nome + "!");
+
+        // Mostra a rolagem e o cálculo detalhado
+        System.out.println("\n" + nome + " rola o dado e tira: " + rolagem);
+        System.out.println("Ataque base de " + nome + ": " + ataque);
+        System.out.println("(Rolagem do dado " + rolagem + " + Ataque " + ataque + ") = Poder total de " + nome + ": " + poderTotal);
 
         // Se o poder do personagem for maior que a defesa do inimigo
         if (poderTotal > alvo.defesa) {
             short dano = (short) (poderTotal - alvo.defesa); // Calcula o dano causado
             alvo.receberDano(dano); // Reduz o HP do inimigo
 
-            System.out.println("O ataque acerta em cheio! " + alvo.nome + " perde " + dano + " de HP.");
+            System.out.println("O golpe de " + nome + " acerta " + alvo.nome + " e causa " + dano + " de dano!");
             System.out.println("Vida restante de " + alvo.nome + ": " + alvo.pontosVida);
         } else {
-            System.out.println(" " + alvo.nome + " defendeu o ataque!");
+            System.out.println("\n" + alvo.nome + " bloqueia o ataque de " + nome + "!");
         }
     }
 
-    ///  Batalhar
+    // Batalhar personagem
     public boolean batalhar(Inimigo inimigo, BufferedReader br, String local) throws IOException {
         System.out.println("\nInício da batalha entre " + nome + " e " + inimigo.nome + "!");
         System.out.println("Local: " + local + "\n");

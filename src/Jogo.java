@@ -76,6 +76,11 @@ public class Jogo {
         System.out.println("Nível: " + jogador.nivel);
         System.out.println("============================");
 
+        if (jogador == null) {
+            System.out.println("Erro: Nenhum personagem foi selecionado. Encerrando o jogo.");
+            return;
+        }
+
         // Início direto da exploração (sem menu principal)
         System.out.println("\nSua jornada começa agora...");
         explorar(jogador, br);
@@ -399,26 +404,25 @@ public class Jogo {
 
             if (inimigo.nome.contains("Rex")){
                 jogador.nivel += 5;
-                System.out.println("\nVocê subiu 5 níveis! ⬆️");
+                System.out.println("\nVocê subiu 5 níveis!");
                 } else if(inimigo.nome.contains("Zumbi")){
                 jogador.nivel += 1;
-                System.out.println("\nVocê subiu 1 nível! ⬆️");
+                System.out.println("\nVocê subiu 1 nível!");
             } else if(inimigo.nome.contains("Troll das Sombras")){
                 jogador.nivel += 2;
-                System.out.println("\nVocê subiu 2 níveis! ⬆️");
+                System.out.println("\nVocê subiu 2 níveis!");
             } else if(inimigo.nome.contains("Lobo Sombrio")){
                 jogador.nivel += 3;
-                System.out.println("\nVocê subiu 3 níveis! ⬆️");
+                System.out.println("\nVocê subiu 3 níveis!");
             } else{
                 jogador.nivel += 1;
-                System.out.println("\n⬆Você subiu 1 nível! ⬆️");
+                System.out.println("\nVocê subiu 1 nível!");
             }
         }
         return venceu;
     }
 
     public static void usarItem(Personagem jogador, Personagem inimigo, BufferedReader br) throws IOException {
-        System.out.println("\n=== SEU INVENTÁRIO ===");
 
         if (jogador.inventario.estaVazio()) {
             System.out.println("Seu inventário está vazio!");
@@ -432,6 +436,12 @@ public class Jogo {
         System.out.print("Digite o nome do item que deseja usar: ");
         String nomeItem = br.readLine().trim();
 
+        // Verifica se o item existe antes de tentar usar
+        if (!jogador.inventario.temItem(nomeItem)) {
+            System.out.println("Esse item não está no seu inventário!");
+            return;
+        }
+
         Random random = new Random();
         int dado = random.nextInt(6) + 1;
         boolean sucesso = dado >= 4;
@@ -444,17 +454,17 @@ public class Jogo {
                 System.out.println("Você recuperou 20 pontos de vida! HP atual: " + jogador.pontosVida + "\n");
             }
             else if (nomeItem.equalsIgnoreCase("Raiz de Mirtilha")) {
-                jogador.pontosVida += 20;
+                jogador.pontosVida += 8;
                 System.out.println("Você recuperou 8 pontos de vida! HP atual: " + jogador.pontosVida + "\n");
             }
             else if (nomeItem.equalsIgnoreCase("Amuleto Guardião")) {
                 jogador.defesa += 20;
-                System.out.println("Você ganhou 20 pontos de defesa! Defesa atual: " + jogador.pontosVida + "\n");
+                System.out.println("Você ganhou 20 pontos de defesa! Defesa atual: " + jogador.defesa + "\n");
 
             }
             else if (nomeItem.equalsIgnoreCase("Escudo Velho")) {
                 jogador.defesa += 5;
-                System.out.println("Você ganhou 5 pontos de defesa! Defesa atual: " + jogador.pontosVida + "\n");
+                System.out.println("Você ganhou 5 pontos de defesa! Defesa atual: " + jogador.defesa + "\n");
 
             }
             else if (nomeItem.equalsIgnoreCase("Orbe do Desespero")) {
@@ -464,7 +474,7 @@ public class Jogo {
             }
             else if (nomeItem.equalsIgnoreCase("Poção de Fúria")) {
                 jogador.ataque += 12;
-                System.out.println("Você entra em fúria! +12 de ataque. Ataque atual: " + jogador.pontosVida +"\n");
+                System.out.println("Você entra em fúria! +12 de ataque. Ataque atual: " + jogador.ataque+"\n");
 
             }
             else if (nomeItem.equalsIgnoreCase("Elixir do Vento Adormecido")) {
@@ -483,9 +493,8 @@ public class Jogo {
                 System.out.println("Você golpeia o inimigo com sua faca e causa 5 pontos de dano no inimigo!\n");
             }
 
-
             else {
-                System.out.println("O item emite um brilho misterioso, mas nada parece acontecer...\n");
+                System.out.println("Você usa o item" + nomeItem + ", mas nada acontece... talvez seu poder ainda seja desconhecido.\n");
             }
 
             jogador.inventario.removerItem(nomeItem, 1);
