@@ -5,7 +5,8 @@ public class Item implements Comparable<Item>, Cloneable {
     private String efeito;
     private int quantidade;
 
-    // Construtor da classe Itens (chamado quando você cria um item)
+    /// Construtor da classe Itens
+    // Chamado quando você cria um item
     public Item (String nome, String descricao, String efeito, int quantidade){
         this.nome = nome;
         this.descricao = descricao;
@@ -13,7 +14,7 @@ public class Item implements Comparable<Item>, Cloneable {
         this.quantidade = quantidade;
     }
 
-    // Getters (acessar os dados)
+    /// Getters (acessar os dados)
     public String getNome() {
         return nome;
     }
@@ -30,17 +31,18 @@ public class Item implements Comparable<Item>, Cloneable {
         return quantidade;
     }
 
-    // Setter (alterar os dados)
+    /// Setter (alterar os dados)
     public void setQuantidade(int quantidade) {
         this.quantidade = quantidade;
     }
 
-    // toString do Item
+    /// toString() do Item
     @Override
     public String toString(){
         return "Nome: "+nome+", Descrição: "+descricao+", Efeito: "+efeito+", Quantidade: "+quantidade;
     }
 
+    /// equals()
     // Para saber se dois itens são iguais
     @Override
     public boolean equals(Object obj) {
@@ -62,13 +64,15 @@ public class Item implements Comparable<Item>, Cloneable {
                 && efeito.equalsIgnoreCase(outro.efeito);
     }
 
+    /// compareTo()
     // Comparar dois itens pelo nome, em ordem alfabética
     @Override
     public int compareTo(Item i){
         return this.nome.compareTo(i.nome);
     }
 
-    // Construtor de cópia (cria um novo objeto Item idêntico ao modelo passado)
+    /// Construtor de cópia
+    // Cria um novo objeto Item idêntico ao modelo passado (irá ser usado dentro do clone())
     public Item(Item modelo) throws Exception
     {
         // Verifica se o modelo existe (evita copiar algo nulo)
@@ -76,37 +80,33 @@ public class Item implements Comparable<Item>, Cloneable {
             throw new Exception("Modelo ausente");
 
         // Copiamos cada atributo do modelo original para o novo objeto
-        // (isso garante que o novo Item tem os mesmos valores, mas é um objeto independente)
+        // Isso garante que o novo Item tem os mesmos valores, mas é um objeto independente
         this.nome       = modelo.nome;
         this.descricao  = modelo.descricao;
         this.efeito     = modelo.efeito;
         this.quantidade = modelo.quantidade;
     }
 
-
-
-    // Método clone() — cria e retorna uma cópia independente do item atual
+    /// clone()
+    // Cria e retorna uma cópia independente do item atual (chamamos o construtor copia de itens aqui)
     @Override
     public Object clone()
     {
-        Item retorno = null; // variável que vai guardar a cópia criada
+        Item retorno = null; // Variável que vai guardar a cópia criada
 
         try
         {
-            // Chama o construtor de cópia, passando o próprio objeto atual (this)
+            // Chama o construtor de cópia do item, passando o próprio objeto atual (this)
             // Isso cria um novo Item com os mesmos dados do item original
             retorno = new Item(this);
         }
-        catch (Exception erro)
-        {
-            // Esse erro praticamente nunca acontece,
-            // pois o "this" (objeto atual) nunca é nulo
-        }
+
+        // Esse erro praticamente nunca acontece, pois o "this" (objeto atual) nunca é nulo
+        catch (Exception erro) { }
 
         // Retorna o novo Item criado (cópia independente do original)
         return retorno;
     }
-
 }
 
 

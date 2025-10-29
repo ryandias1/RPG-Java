@@ -1,18 +1,19 @@
 import java.util.ArrayList;
+import java.util.Collections;
 
-// Classe Inventário
+/// Classe Inventário
 public class Inventario implements Cloneable {
 
     // Criando uma lista chamada itens que vai guardar os objetos da classe Item
     private ArrayList<Item> itens;
 
-    // Construtor da classe (cria um inventário (lista) vazio)
-    // Chamado toda vez que crio um novo inventário
+    /// Construtor da padrão
+    // È chamado toda vez que eu crio um novo inventário, inicialmente vazio
     public Inventario() {
         this.itens = new ArrayList<>();
     }
 
-    // Método para adicionar um item ao inventário
+    /// Adicionar item ao inventário
     public void adicionarItem(Item novoItem) {
         // Percorrendo cada item que já existe na lista
         for (Item item : itens) {
@@ -20,6 +21,7 @@ public class Inventario implements Cloneable {
             // Comparo (equals) se o nome do item novo é igual ao de algum que já está na lista
             // Transformo o nome antigo e o novo para minúsculo antes de comparar
             if (item.getNome().toLowerCase().equals(novoItem.getNome().toLowerCase())) {
+
                 // Se o nome for igual fazemos as somas das quantidade (antiga + nova)
                 item.setQuantidade(item.getQuantidade() + novoItem.getQuantidade());
                 return;
@@ -31,18 +33,16 @@ public class Inventario implements Cloneable {
 
     /// Remover um item do inventário
     public void removerItem(String nomeItem, int quantidade) {
-        // Remove espaços extras antes e depois do nome digitado
-        nomeItem = nomeItem.trim();
+        nomeItem = nomeItem.trim(); // Remove espaços extras antes e depois do nome digitado
 
         // Percorre a lista de acordo com o tamanho dela (itens.size())
         for (int i = 0; i < itens.size(); i++) {
-            // Pega o item atual da lista na posição i
-            Item item = itens.get(i);
+            Item item = itens.get(i); // Pega o item atual da lista na posição i
 
             // Verifica se o nome do item atual é igual ao nome passado como parâmetro
             if (item.getNome().toLowerCase().equals(nomeItem.toLowerCase())) {
-                // Calcula quanto vai sobrar do item depois da remoção
-                int novaQtd = item.getQuantidade() - quantidade;
+                int novaQtd = item.getQuantidade() - quantidade; // Calcula quanto vai sobrar do item depois da remoção
+
                 // Se ainda sobrar atualiza a quantidade
                 if (novaQtd > 0) {
                     item.setQuantidade(novaQtd);
@@ -58,27 +58,38 @@ public class Inventario implements Cloneable {
 
     /// Listar todos os itens do inventário
     public boolean listarItens() {
+        // Se não tiver itens
         if (itens.isEmpty()) {
             System.out.println("\nSeu inventário está vazio.");
-            return false; // retorna falso se estiver vazio
+            return false;
         }
 
+        // Ordena os itens da nossa lista em ordem alfabética pelo nome
+        // Usamos o compareTo da classe itens
+        Collections.sort(itens);
+
+        // Percorre a lista intera e imprime os itens
         System.out.println("\n=== ITENS NO INVENTÁRIO ===");
         for (Item item : itens) {
             System.out.println(item);
         }
         System.out.println("==============================");
-        return true; // retorna true se tiver itens
+        return true; // Retorna true se tiver itens
     }
 
+    /// Verificar se está vazio
     public boolean estaVazio() {
-        return itens.isEmpty();
+        return itens.isEmpty(); // Retorna true se a lista estiver vazia
     }
 
 
-    // Verifica se um item com o nome informado existe no inventário
+    /// Verifica se um item com o nome informado existe no inventário
     public boolean temItem(String nomeItem) {
+        // Percorre os objetos guardados na lista itens
         for (Item item : itens) {
+            // Pega o nome da lista e o nome digitado
+            // Remove os espaços extras (trim)
+            // Compara os textos ignorando maiúscula e minúsculas
             if (item.getNome().equalsIgnoreCase(nomeItem.trim())) {
                 return true;
             }
@@ -86,35 +97,38 @@ public class Inventario implements Cloneable {
         return false;
     }
 
-    // Método para criar uma cópia independente do inventário atual
+    /// clone()
+    // Cria uma cópia independente do inventário atual
     @Override
     public Object clone() {
-        Inventario retorno = null;
+        Inventario retorno = null; // Variável que vai guardar a cópia criada
 
         try
         {
-            // Cria um novo inventário usando o construtor de cópia
+            // Chama o construtor de cópia do inventário, passando o próprio objeto atual (this)
+            // Isso cria um novo Inventário com os mesmos dados do Inventário original
             retorno = new Inventario(this);
         }
-        catch (Exception erro)
-        {} // sei que o this nunca será null, então o único erro possível é improvável
 
+        // Esse erro praticamente nunca acontece, pois o "this" (objeto atual) nunca é nulo
+        catch (Exception erro) {}
+
+        // Retorna o novo Inventário criado (cópia independente do original)
         return retorno;
     }
 
-    // Construtor de cópia: cria um inventário igual ao atual (outro)
+    /// Construtor de cópia
+    // Cria um outro inventário igual ao atual
     public Inventario(Inventario modelo) throws Exception {
-        // Verifica se o modelo passado existe
+        // Verifica se o invantário passado existe
         if (modelo == null)
             throw new Exception("Modelo ausente");
 
         // Cria uma nova lista de itens (independente da original)
         this.itens = new ArrayList<>();
 
-        // Clonamos os itens um por um, pois Item é um objeto
-        // e queremos uma cópia independente (deep copy)
+        // Percorre todos os itens do inventário original, e adiciona clones deles ao novo inventário
         for (Item item : modelo.itens)
             this.itens.add((Item)item.clone());
     }
-
 }
