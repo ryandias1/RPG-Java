@@ -10,6 +10,7 @@ abstract class Personagem {
     protected short defesa;
     protected short nivel;
     protected Inventario inventario;
+    protected int turnosCongelado = 0;
 
     // Construtor da classe Personagem
     public Personagem(String nome, short pontosVida, short ataque, short defesa, short nivel, Inventario inventario) {
@@ -84,7 +85,7 @@ abstract class Personagem {
 
                 // Jogador quer usar item
                 if (usarItem == 1) {
-                    Jogo.usarItem(this, br);
+                    Jogo.usarItem(this,inimigo, br);
                 }
 
                 // Depois de decidir sobre o item, realiza o ataque
@@ -112,7 +113,12 @@ abstract class Personagem {
             // TURNO DO INIMIGO
             if (inimigo.estaVivo()) {
                 System.out.println("\n=== Turno do inimigo ===");
-                inimigo.atacar(this);
+                if(inimigo.estaCongelado()){
+                    System.out.println(inimigo.nome + " está congelado e não pode agir neste turno!");
+                    inimigo.reduzirTurnoCongelado(); // reduz o contador
+                }
+                else{inimigo.atacar(this);}
+
 
                 if (!this.estaVivo()) {
                     System.out.println("\nVocê foi derrotado pelo " + inimigo.nome + "...");
@@ -139,5 +145,18 @@ abstract class Personagem {
     @Override
     public String toString() {
         return nome + " [HP=" + pontosVida + ", Atk=" + ataque + ", Def=" + defesa + ", Nível=" + nivel + "]";
+    }
+
+
+    public void congelar(int turnos) {
+        this.turnosCongelado = turnos;
+    }
+
+    public boolean estaCongelado() {
+        return this.turnosCongelado > 0;
+    }
+
+    public void reduzirTurnoCongelado() {
+        if (this.turnosCongelado > 0) this.turnosCongelado--;
     }
 }

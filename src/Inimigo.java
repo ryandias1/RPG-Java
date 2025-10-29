@@ -1,6 +1,8 @@
 // Classe Inimigo (herda de Personagem)
 public class Inimigo extends Personagem{
 
+
+
     // Construtor da classe Inimigo
     public Inimigo(
             String nome,

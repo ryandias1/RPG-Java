@@ -286,7 +286,7 @@ public class Jogo {
         return venceu;
     }
 
-    public static void usarItem(Personagem jogador, BufferedReader br) throws IOException {
+    public static void usarItem(Personagem jogador, Personagem inimigo, BufferedReader br) throws IOException {
         System.out.println("\n=== SEU INVENTÁRIO ===");
 
         if (jogador.inventario.estaVazio()) {
@@ -310,20 +310,57 @@ public class Jogo {
 
             if (nomeItem.equalsIgnoreCase("Poção de Cura")) {
                 jogador.pontosVida += 20;
-                System.out.println("Você recuperou 20 pontos de vida! HP atual: " + jogador.pontosVida);
+                System.out.println("Você recuperou 20 pontos de vida! HP atual: " + jogador.pontosVida + "\n");
             }
-            else if (nomeItem.equalsIgnoreCase("Elixir de Energia")) {
-                jogador.ataque += 5;
-                System.out.println("Você sente sua força aumentar temporariamente! (+5 ataque)");
+            else if (nomeItem.equalsIgnoreCase("Raiz de Mirtilha")) {
+                jogador.pontosVida += 20;
+                System.out.println("Você recuperou 8 pontos de vida! HP atual: " + jogador.pontosVida + "\n");
             }
+            else if (nomeItem.equalsIgnoreCase("Amuleto Guardião")) {
+                jogador.defesa += 20;
+                System.out.println("Você ganhou 20 pontos de defesa! Defesa atual: " + jogador.pontosVida + "\n");
+
+            }
+            else if (nomeItem.equalsIgnoreCase("Escudo Velho")) {
+                jogador.defesa += 5;
+                System.out.println("Você ganhou 5 pontos de defesa! Defesa atual: " + jogador.pontosVida + "\n");
+
+            }
+            else if (nomeItem.equalsIgnoreCase("Orbe do Desespero")) {
+                inimigo.pontosVida -= 8;
+                System.out.println("Você libera uma onda de energia! O inimigo perde 8 de vida. HP inimigo: " + inimigo.pontosVida + "\n");
+
+            }
+            else if (nomeItem.equalsIgnoreCase("Poção de Fúria")) {
+                jogador.ataque += 12;
+                System.out.println("Você entra em fúria! +12 de ataque. Ataque atual: " + jogador.pontosVida +"\n");
+
+            }
+            else if (nomeItem.equalsIgnoreCase("Elixir do Vento Adormecido")) {
+                inimigo.congelar(1); // congela por 1 turno
+                System.out.println("Você congela o inimigo por um turno!\n");
+
+            }
+            else if (nomeItem.equalsIgnoreCase("Flecha Envenenada")) {
+                inimigo.pontosVida -= 5;
+                System.out.println("Você dispara a Flecha Envenenada! O inimigo perde 5 pontos de vida.\n");
+                jogador.inventario.removerItem(nomeItem, 1);
+            }
+
+            else if (nomeItem.equalsIgnoreCase("Faca Inicial")) {
+                inimigo.pontosVida -= 5;
+                System.out.println("Você golpeia o inimigo com sua faca e causa 5 pontos de dano no inimigo!\n");
+            }
+
+
             else {
-                System.out.println("O item emite um brilho misterioso, mas nada parece acontecer...");
+                System.out.println("O item emite um brilho misterioso, mas nada parece acontecer...\n");
             }
 
             jogador.inventario.removerItem(nomeItem, 1);
         }
         else {
-            System.out.println("\nVocê tenta usar o item " + nomeItem + ", mas nada acontece...");
+            System.out.println("\nVocê tenta usar o item " + nomeItem + ", mas nada acontece...\n");
             jogador.inventario.removerItem(nomeItem, 1);
         }
     }
