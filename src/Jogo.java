@@ -386,6 +386,8 @@ public class Jogo {
             System.out.println("\nVocê venceu a batalha contra " + inimigo.nome + "!");
             System.out.println("Você vasculha o corpo do inimigo em busca de algo útil...");
 
+
+
             // Mostra status atualizado do jogador após a luta
             System.out.println("\nSeu estado atual após a batalha:");
             System.out.println(jogador);
@@ -415,6 +417,29 @@ public class Jogo {
             } else {
                 System.out.println("O inimigo não deixou nenhum item para trás.");
             }
+
+            // --- CHANCE RARA DE PEGAR UM ITEM EXTRA DO INVENTÁRIO DO INIMIGO ---
+            Random chanceExtra = new Random();
+            int rolagemExtra = chanceExtra.nextInt(100) + 1; // de 1 a 100
+            // Apenas 10% de chance de o jogador encontrar algo a mais
+            if (rolagemExtra <= 10 && inimigo.inventario != null && !inimigo.inventario.estaVazio()) {
+                try {
+                    // Clona o inventário do inimigo
+                    Inventario inventarioClonado = (Inventario) inimigo.inventario.clone();
+
+                    // Pega o primeiro item da cópia (pois inimigos têm apenas 1)
+                    Item itemExtra = inventarioClonado.getItens().get(0);
+
+                    // Adiciona o item ao inventário do jogador
+                    jogador.inventario.adicionarItem(itemExtra);
+
+                    System.out.println("\nVocê vasculha melhor o inimigo e encontra algo a mais!");
+                    System.out.println("Você obteve um item raro: " + itemExtra.getNome() + "!");
+                } catch (Exception erro) {
+                    System.out.println("Erro ao tentar copiar o item extra do inimigo.");
+                }
+            }
+
 
             if (inimigo.nome.contains("Rex")){
                 jogador.nivel += 5;

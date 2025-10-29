@@ -97,6 +97,11 @@ public class Inventario implements Cloneable {
         return false;
     }
 
+    // Retorna a lista de itens (usado apenas internamente para clonar ou saquear)
+    public ArrayList<Item> getItens() {
+        return this.itens;
+    }
+
     /// clone()
     // Cria uma cópia independente do inventário atual
     @Override
@@ -131,4 +136,5 @@ public class Inventario implements Cloneable {
         for (Item item : modelo.itens)
             this.itens.add((Item)item.clone());
     }
+
 }
