@@ -137,4 +137,10 @@ public class Inventario implements Cloneable {
             this.itens.add((Item)item.clone());
     }
 
+    @Override
+    public String toString() {
+        return "Inventário com " + itens.size() + " itens.";
+    }
+
+
 }

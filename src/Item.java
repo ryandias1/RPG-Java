@@ -68,7 +68,7 @@ public class Item implements Comparable<Item>, Cloneable {
     // Comparar dois itens pelo nome, em ordem alfabética
     @Override
     public int compareTo(Item i){
-        return this.nome.compareTo(i.nome);
+        return this.nome.compareToIgnoreCase(i.nome);
     }
 
     /// Construtor de cópia
@@ -107,6 +107,17 @@ public class Item implements Comparable<Item>, Cloneable {
         // Retorna o novo Item criado (cópia independente do original)
         return retorno;
     }
+
+    @Override
+    public int hashCode() {
+        int ret = 1;
+        //case-insensitive pois equals é
+        ret = 2 * ret + (nome == null ? 0 : nome.toLowerCase().hashCode());
+        ret = 2 * ret + (descricao == null ? 0 : descricao.toLowerCase().hashCode());
+        ret = 2 * ret + (efeito == null ? 0 : efeito.toLowerCase().hashCode());
+        return ret;
+    }
+
 }
 
 
