@@ -85,12 +85,15 @@ public class Inventario implements Cloneable {
 
     /// Verifica se um item com o nome informado existe no inventário
     public boolean temItem(String nomeItem) {
-        // Percorre os objetos guardados na lista itens
+        // Pega o texto que o usuário digitou, remove os espaços extras e passa tudo para minúsculo
+        nomeItem = nomeItem.trim().toLowerCase();
+
+        // Percorre cada objeto Item dentro da lista itens
         for (Item item : itens) {
-            // Pega o nome da lista e o nome digitado
-            // Remove os espaços extras (trim)
-            // Compara os textos ignorando maiúscula e minúsculas
-            if (item.getNome().equalsIgnoreCase(nomeItem.trim())) {
+            // Pega o nome do item atual
+            // Transforma em minúsculo
+            // Verifica se o nome do item contém o texto digitado
+            if (item.getNome().toLowerCase().contains(nomeItem)) {
                 return true;
             }
         }
