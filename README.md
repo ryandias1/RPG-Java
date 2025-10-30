@@ -40,3 +40,9 @@ Após explorar completamente um local, ele é marcado como **“concluído”**.
 - **Arthur Azevedo Locce Baptista**  
 - **Ryan Chaves Dias**  
 - **Sophia Franco de Godoy**
+
+## ⚙️ Como Executar
+Baixe o projeto com git clone e execute a classe Jogo.java no IntelliJ IDEA.
+
+```bash
+git clone https://github.com/seu-usuario/reino-de-aurora.git
