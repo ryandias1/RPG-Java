@@ -67,24 +67,29 @@ abstract class Personagem {
     /// Batalhar contra outro personagem
     public boolean batalhar(Inimigo inimigo, BufferedReader br, String local) throws IOException {
 
-        // Início da batalha
-        System.out.println("\nInício da batalha entre " + nome + " e " + inimigo.nome + "!");
-        System.out.println("Local: " + local + "\n");
+        System.out.println("\n================================================================");
+        System.out.println("                 INÍCIO DA BATALHA");
+        System.out.println("================================================================");
+        System.out.println("Local: " + local);
+        System.out.println("Você: " + this.nome + "  VS  Inimigo: " + inimigo.nome);
+        System.out.println("================================================================");
 
         Random random = new Random();
+        int turno = 1;
 
-        // Enquanto os dois estiverem vivos
         while (this.estaVivo() && inimigo.estaVivo()) {
 
-            // Turno do jogador
-            System.out.println("\n=== È o seu turno, " + nome + "!");
+            System.out.println("\n----------------------------------------------------------------");
+            System.out.println("                       TURNO " + turno);
+            System.out.println("----------------------------------------------------------------");
+
+            // TURNO DO JOGADOR
+            System.out.println("\nÉ o seu turno, " + nome + "!");
             System.out.println("1 - Atacar");
             System.out.println("2 - Tentar fugir");
             System.out.print("Escolha uma ação: ");
-
             int escolha = Integer.parseInt(br.readLine());
 
-            // Atacar inimigo
             if (escolha == 1) {
                 System.out.println("\nDeseja usar um item antes de atacar?");
                 System.out.println("1 - Sim");
@@ -92,66 +97,78 @@ abstract class Personagem {
                 System.out.print("Escolha: ");
                 int usarItem = Integer.parseInt(br.readLine());
 
-                // Jogador quer usar item
                 if (usarItem == 1) {
-                    Jogo.usarItem(this,inimigo, br);
+                    Jogo.usarItem(this, inimigo, br);
                 }
 
-                // Depois que escolher o item, realiza o ataque
+                System.out.println("\nVocê parte para o ataque!");
                 this.atacar(inimigo);
             }
 
-            // Fugir do inimigo
             else if (escolha == 2) {
                 Jogo.fugir(this, br, local);
 
-                // Se o jogador continuar vivo
                 if (this.estaVivo()) {
-                    System.out.println("\nVocê consegue escapar da batalha e deixa " + inimigo.nome + " para trás!");
+                    System.out.println("\nVocê conseguiu escapar da batalha!");
                     return false;
                 } else {
-                    return false; // Luta termina
+                    return false;
                 }
             }
 
-            // Se o jogador digita algo inválido
             else {
                 System.out.println("Opção inválida! Escolha novamente.");
                 continue;
             }
 
-            // Segundo: turno do inimigo (se continuar vivo após o ataque do jogador)
+            // TURNO DO INIMIGO
             if (inimigo.estaVivo()) {
-                System.out.println("\nTurno do inimigo " + inimigo.nome + "!");
+                System.out.println("\n----------------------------------------------------------------");
+                System.out.println("                   TURNO DO INIMIGO: " + inimigo.nome);
+                System.out.println("----------------------------------------------------------------");
 
-                // Se o inimigo estiver congelado, ele perde um turno
-                if(inimigo.estaCongelado()){
+                if (inimigo.estaCongelado()) {
                     System.out.println(inimigo.nome + " está congelado e não pode agir neste turno!");
-                    inimigo.reduzirTurnoCongelado(); // Reduz o contador
+                    inimigo.reduzirTurnoCongelado();
+                } else {
+                    inimigo.atacar(this);
                 }
-                else{inimigo.atacar(this);}
 
-                // Se o jogador morrer
                 if (!this.estaVivo()) {
-                    System.out.println("\nVocê foi derrotado pelo " + inimigo.nome + "...");
-                    System.out.println("O Reino de Aurora cai nas sombras...");
+                    System.out.println("\nVocê foi derrotado por " + inimigo.nome + "...");
+                    System.out.println("O Reino de Aurora cai nas sombras.");
                     System.out.println("Fim de jogo!");
                     System.exit(0);
                 }
             }
 
-            // Mensagem entre os turnos (se ambos ainda estiverem vivos)
+            // STATUS APÓS O TURNO
+            System.out.println("\n=================== STATUS APÓS O TURNO ===================");
+            System.out.println(this.nome + " → HP: " + this.pontosVida + " | Ataque: " + this.ataque + " | Defesa: " + this.defesa);
+            System.out.println(inimigo.nome + " → HP: " + inimigo.pontosVida + " | Ataque: " + inimigo.ataque + " | Defesa: " + inimigo.defesa);
+            System.out.println("============================================================");
+
             if (this.estaVivo() && inimigo.estaVivo()) {
-                System.out.println("\nNinguém foi derrotado ainda... a batalha continua!");
+                System.out.println("\nA batalha continua...");
             }
+
+            turno++;
         }
 
-        // Fim da luta
+        // RESULTADO FINAL
+        System.out.println("\n================================================================");
         if (this.estaVivo() && !inimigo.estaVivo()) {
-            return true; // Vitória
+            System.out.println("VITÓRIA! " + this.nome + " derrotou " + inimigo.nome + "!");
+            System.out.println("Batalha encerrada em " + (turno - 1) + " turnos.");
+            System.out.println("================================================================");
+            return true;
+        } else {
+            System.out.println("DERROTA... " + this.nome + " caiu em combate.");
+            System.out.println("================================================================");
+            return false;
         }
-        return false; // Morreu ou fugiu
     }
+
 
     // Congela o personagem por uma certa quantidade de turnos (inimigo.congelar(2);)
     public void congelar(int turnos) {

@@ -12,7 +12,7 @@ public class Jogo {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
         // Exibe a história introdutória e o objetivo principal do jogo
-        System.out.println("🗡Bem-vindo ao Reino de Aurora!");
+        System.out.println("Bem-vindo ao Reino de Aurora!");
         System.out.println("Há séculos, o reino viveu em paz... até que o temido dragão Rex despertou.");
         System.out.println("Com seu poder, vilas foram destruídas e criaturas sombrias voltaram a andar pela terra.");
         System.out.println("\nSeu objetivo: descobrir onde o dragão está escondido e derrotá-lo para restaurar a paz em Aurora!");
@@ -130,7 +130,7 @@ public class Jogo {
                 System.out.println("O ar é denso e cheio de névoa... algo se move entre as árvores.\n");
 
                 // Mostra status atual do personagem ao entrar na área
-                System.out.println("\n✨ Status atual antes de explorar:");
+                System.out.println("\nStatus atual antes de explorar:");
                 System.out.println(jogador);
 
                 while (explorandoFloresta) {
@@ -499,48 +499,78 @@ public class Jogo {
             else if (nomeItem.equalsIgnoreCase("Amuleto Guardião")) {
                 jogador.defesa += 20;
                 System.out.println("Você ganhou 20 pontos de defesa! Defesa atual: " + jogador.defesa + "\n");
-
             }
             else if (nomeItem.equalsIgnoreCase("Escudo Velho")) {
                 jogador.defesa += 5;
                 System.out.println("Você ganhou 5 pontos de defesa! Defesa atual: " + jogador.defesa + "\n");
-
             }
             else if (nomeItem.equalsIgnoreCase("Orbe do Desespero")) {
                 inimigo.pontosVida -= 8;
                 System.out.println("Você libera uma onda de energia! O inimigo perde 8 de vida. HP inimigo: " + inimigo.pontosVida + "\n");
-
             }
             else if (nomeItem.equalsIgnoreCase("Poção de Fúria")) {
                 jogador.ataque += 12;
-                System.out.println("Você entra em fúria! +12 de ataque. Ataque atual: " + jogador.ataque+"\n");
-
+                System.out.println("Você entra em fúria! +12 de ataque. Ataque atual: " + jogador.ataque + "\n");
             }
             else if (nomeItem.equalsIgnoreCase("Elixir do Vento Adormecido")) {
-                inimigo.congelar(1); // congela por 1 turno
+                inimigo.congelar(1);
                 System.out.println("Você congela o inimigo por um turno!\n");
-
             }
             else if (nomeItem.equalsIgnoreCase("Flecha Envenenada")) {
                 inimigo.pontosVida -= 5;
                 System.out.println("Você dispara a Flecha Envenenada! O inimigo perde 5 pontos de vida.\n");
                 jogador.inventario.removerItem(nomeItem, 1);
             }
-
             else if (nomeItem.equalsIgnoreCase("Faca Inicial")) {
                 inimigo.pontosVida -= 5;
-                System.out.println("Você golpeia o inimigo com sua faca e causa 5 pontos de dano no inimigo!\n");
+                System.out.println("Você golpeia o inimigo com sua faca e causa 5 pontos de dano!\n");
             }
 
+            // ITENS LENDÁRIOS
+            else if (nomeItem.equalsIgnoreCase("Espada do Crepúsculo")) {
+                jogador.ataque += 30;
+                System.out.println("O poder do crepúsculo flui através de você! +30 de ataque. Ataque atual: " + jogador.ataque + "\n");
+            }
+            else if (nomeItem.equalsIgnoreCase("Armadura do Guardião Ancestral")) {
+                jogador.defesa += 25;
+                System.out.println("Os espíritos protetores o envolvem! +25 de defesa. Defesa atual: " + jogador.defesa + "\n");
+            }
+            else if (nomeItem.equalsIgnoreCase("Anel da Eternidade")) {
+                jogador.pontosVida += 100;
+                System.out.println("Sua vitalidade aumenta! +100 de HP. HP atual: " + jogador.pontosVida + "\n");
+            }
+            else if (nomeItem.equalsIgnoreCase("Orbe das Almas Perdidas")) {
+                jogador.ataque += 15;
+                jogador.defesa += 10;
+                System.out.println("As almas derrotadas fortalecem você! +15 de ataque, +10 de defesa.\n");
+            }
+            else if (nomeItem.equalsIgnoreCase("Relíquia Desconhecida")) {
+                int efeito = random.nextInt(3);
+                switch (efeito) {
+                    case 0:
+                        jogador.ataque += 10;
+                        System.out.println("Um poder estranho aumenta seu ataque em +10!\n");
+                        break;
+                    case 1:
+                        jogador.defesa += 10;
+                        System.out.println("Uma energia misteriosa fortalece sua defesa em +10!\n");
+                        break;
+                    case 2:
+                        jogador.pontosVida += 30;
+                        System.out.println("Você sente uma força vital inexplicável! +30 HP.\n");
+                        break;
+                }
+            }
+
+            // Caso o item não tenha efeito conhecido
             else {
                 System.out.println("Você usa o item " + nomeItem + ", mas nada acontece... talvez seu poder ainda seja desconhecido.\n");
             }
 
             jogador.inventario.removerItem(nomeItem, 1);
-        }
-        else {
-            System.out.println("\nVocê tenta usar o item " + nomeItem + ", mas nada acontece...\n");
-            jogador.inventario.removerItem(nomeItem, 1);
+
+        } else {
+            System.out.println("\nVocê tenta usar o item " + nomeItem + ", mas falha miseravelmente!\n");
         }
     }
 
