@@ -168,7 +168,8 @@ public class Jogo {
                         jogador.inventario.adicionarItem(amuleto);
 
                         System.out.println("Você recebeu o item: " + amuleto.getNome() + "!");
-                        jogador.pontosVida += 10;
+                        jogador.vidaMax += 10;
+                        jogador.curar((short)10);
                         System.out.println("Sua energia aumenta! HP atual: " + jogador.pontosVida);
                         trilhaCentralExplorada = true;
                     }
@@ -489,11 +490,11 @@ public class Jogo {
             System.out.println("\nVocê usa o item " + nomeItem + " com sucesso!");
 
             if (nomeItem.equalsIgnoreCase("Poção de Cura")) {
-                jogador.pontosVida += 20;
+                jogador.curar((short)20);
                 System.out.println("Você recuperou 20 pontos de vida! HP atual: " + jogador.pontosVida + "\n");
             }
             else if (nomeItem.equalsIgnoreCase("Raiz de Mirtilha")) {
-                jogador.pontosVida += 8;
+                jogador.curar((short)8);
                 System.out.println("Você recuperou 8 pontos de vida! HP atual: " + jogador.pontosVida + "\n");
             }
             else if (nomeItem.equalsIgnoreCase("Amuleto Guardião")) {
@@ -536,8 +537,10 @@ public class Jogo {
                 System.out.println("Os espíritos protetores o envolvem! +25 de defesa. Defesa atual: " + jogador.defesa + "\n");
             }
             else if (nomeItem.equalsIgnoreCase("Anel da Eternidade")) {
-                jogador.pontosVida += 100;
-                System.out.println("Sua vitalidade aumenta! +100 de HP. HP atual: " + jogador.pontosVida + "\n");
+                jogador.vidaMax += 100;  // aumenta o HP máximo
+                jogador.curar((short)100); // recupera até o novo máximo
+                System.out.println("O poder do Anel da Eternidade flui em você! +100 de Vida Máxima.");
+                System.out.println("HP atual: " + jogador.pontosVida + "/" + jogador.vidaMax + "\n");
             }
             else if (nomeItem.equalsIgnoreCase("Orbe das Almas Perdidas")) {
                 jogador.ataque += 15;
@@ -556,8 +559,10 @@ public class Jogo {
                         System.out.println("Uma energia misteriosa fortalece sua defesa em +10!\n");
                         break;
                     case 2:
-                        jogador.pontosVida += 30;
-                        System.out.println("Você sente uma força vital inexplicável! +30 HP.\n");
+                        jogador.vidaMax += 30; // aumenta o limite
+                        jogador.curar((short)30); // cura até esse novo máximo
+                        System.out.println("Você sente uma força vital inexplicável! +30 de Vida Máxima.");
+                        System.out.println("HP atual: " + jogador.pontosVida + "/" + jogador.vidaMax + "\n");
                         break;
                 }
             }

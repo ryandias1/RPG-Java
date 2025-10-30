@@ -6,6 +6,7 @@ import java.util.Random;
 abstract class Personagem {
     protected String nome;
     protected short pontosVida;
+    protected short vidaMax;
     protected short ataque;
     protected short defesa;
     protected short nivel;
@@ -16,6 +17,7 @@ abstract class Personagem {
     public Personagem(String nome, short pontosVida, short ataque, short defesa, short nivel, Inventario inventario) {
         this.nome = nome;
         this.pontosVida = pontosVida;
+        this.vidaMax = pontosVida; // Define a vida máxima inicial
         this.ataque = ataque;
         this.defesa = defesa;
         this.nivel = nivel;
@@ -36,6 +38,48 @@ abstract class Personagem {
             pontosVida = 0;
         }
     }
+
+    // Cura o personagem (sem ultrapassar o máximo)
+    public void curar(short quantidade) {
+        pontosVida += quantidade;
+        if (pontosVida > vidaMax)
+            pontosVida = vidaMax;
+
+        System.out.println(nome + " recuperou " + quantidade + " pontos de vida. HP atual: " + pontosVida + "/" + vidaMax);
+    }
+
+    // Subir de nível
+    public void subirNivel(int quantidade) {
+        this.nivel += quantidade;
+
+        short aumentoVidaMax = (short) (5 * quantidade);
+        short aumentoAtaque = (short) (2 * quantidade);
+        short aumentoDefesa = (short) (1 * quantidade);
+
+        if (this instanceof Guerreiro) {
+            aumentoVidaMax += (short) (3 * quantidade);
+            aumentoDefesa += (short) (2 * quantidade);
+        } else if (this instanceof Mago) {
+            aumentoAtaque += (short) (3 * quantidade);
+        } else if (this instanceof Arqueiro) {
+            aumentoAtaque += (short) (2 * quantidade);
+            aumentoDefesa += (short) (1 * quantidade);
+        }
+
+        this.vidaMax += aumentoVidaMax;
+        this.ataque += aumentoAtaque;
+        this.defesa += aumentoDefesa;
+
+        // Recupera um pouco de HP ao subir de nível
+        curar((short)(aumentoVidaMax / 2));
+
+        System.out.println("\n=== SUBIU DE NÍVEL! ===");
+        System.out.println("Novo nível: " + this.nivel);
+        System.out.println("Ganhou +" + aumentoVidaMax + " Vida Máxima, +" + aumentoAtaque + " Ataque, +" + aumentoDefesa + " Defesa!");
+        System.out.println("HP: " + pontosVida + "/" + vidaMax);
+    }
+
+
 
     /// Atacar personagem
     public void atacar(Personagem alvo) {
@@ -191,10 +235,9 @@ abstract class Personagem {
     @Override
     public String toString() {
         return "\nNome: " + nome +
-                "\nHP: " + pontosVida +
+                "\nHP: " + pontosVida + "/" + vidaMax +
                 "\nAtaque: " + ataque +
                 "\nDefesa: " + defesa +
-                "\nNível: " + nivel +
-                "\n";
+                "\nNível: " + nivel + "\n";
     }
 }
