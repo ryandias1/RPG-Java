@@ -13,13 +13,10 @@ public class Guerreiro extends Personagem {
             // Chama o construtor da classe Personagem
             super(nome, pontosVida, ataque, defesa, nivel, inventario);
 
-            // Adiciona um item ao inventário do Guerreiro
-            Item facaInicial = new Item(
-                    "Faca Inicial",
-                    "Uma lâmina simples, mas confiável.",
-                    "+5 Ataque",
-                    1
-            );
+            // Cria um objeto Item, que representa a arma inicial do Guerreiro
+            Item facaInicial = new Item("Faca Inicial", "Uma lâmina simples, mas confiável.", "+5 Ataque", 1);
+
+            // O item criado é adicionado ao inventário do Guerreiro
             this.inventario.adicionarItem(facaInicial);
         }
     }
