@@ -323,6 +323,12 @@ public class Jogo {
                 }
 
                 System.out.println("Mesmo ferido, você consegue se arrastar até uma parede quebrada e respirar por um instante...");
+
+                // Mostra status completo após o evento
+                System.out.println("\n=== STATUS ATUAL APÓS O INCIDENTE ===");
+                System.out.println(jogador);
+                System.out.println("=====================================\n");
+
                 vilaExplorada = true; // marca como já explorada
             }
 
