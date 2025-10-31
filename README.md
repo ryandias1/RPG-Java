@@ -35,7 +35,7 @@ Após explorar completamente um local, ele é marcado como **“concluído”**.
 - O jogador pode **atacar**, **fugir** ou **usar itens** durante o turno.  
 - Inimigos podem **dropar itens raros ou lendários** após a vitória.
 
-## Equipe de Desenvolvimento
+## 💻 Equipe de Desenvolvimento
 
 - **Arthur Azevedo Locce Baptista**  
 - **Ryan Chaves Dias**  
