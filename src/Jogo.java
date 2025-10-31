@@ -592,6 +592,21 @@ public class Jogo {
     public static void fugir(Personagem jogador, BufferedReader br, String local) throws IOException {
         System.out.println("\nVocê tenta fugir...");
 
+        // Não é possível fugir do dração Rex
+        if (local.contains("Montanha") || local.contains("Rex")) {
+            System.out.println("Você dá alguns passos para trás, mas o chão treme violentamente...");
+            System.out.println("O rugido ensurdecedor de Rex ecoa pela montanha!");
+            System.out.println("Uma torrente de fogo cobre tudo ao seu redor!");
+            jogador.receberDano(jogador.pontosVida); // dano letal
+
+            System.out.println("\n=== DERROTA ===");
+            System.out.println("Você foi engolido pelas chamas do dragão Rex...");
+            System.out.println("O Reino de Aurora cai nas sombras mais uma vez.");
+            System.out.println("Fim de jogo.");
+            System.exit(0);
+            return;
+        }
+
         Random random = new Random();
         int rolagem = random.nextInt(6) + 1;
 
