@@ -131,7 +131,7 @@ public class Inventario implements Cloneable {
     }
 
     /// Construtor de cópia
-    // É chamado quando você quer criar um novo inventário igual a outro, mas de forma independente (ou seja, alterar um não muda o outro).
+    // É chamado quando você quer criar um novo inventário igual a outro, mas de forma independente (ou seja, alterar um não muda o outro)
     public Inventario(Inventario modelo) throws Exception {
 
         // Verifica se o inventário passado existe

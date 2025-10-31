@@ -2,8 +2,11 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.Random;
 
-/// Classe Personagem (molde base para criar todos os personagens)
+/// Classe Personagem
+// Molde base para criar todos os personagens
 abstract class Personagem {
+
+    // Atributos (protected = acessível dentro da classe e das subclasses)
     protected String nome;
     protected short pontosVida;
     protected short vidaMax;
@@ -13,25 +16,26 @@ abstract class Personagem {
     protected Inventario inventario;
     protected int turnosCongelado = 0;
 
-    // Construtor da classe Personagem
+    /// Construtor padrão da classe Personagem
     public Personagem(String nome, short pontosVida, short ataque, short defesa, short nivel, Inventario inventario) {
         this.nome = nome;
         this.pontosVida = pontosVida;
-        this.vidaMax = pontosVida; // Define a vida máxima inicial
+        this.vidaMax = pontosVida;
         this.ataque = ataque;
         this.defesa = defesa;
         this.nivel = nivel;
         this.inventario = inventario;
     }
 
-    // Verifica se está vivo
+    /// Verifica se o personagem está vivo
     public boolean estaVivo() {
-        return pontosVida > 0; // Retorna true
+        return pontosVida > 0; // Retorna true se a vida for maior que zero
     }
 
-    // Recebe dano
+    /// Personagem recebe dano
+    // È é chamado quando o personagem leva um golpe e perde pontos de vida
     public void receberDano(short dano) {
-        pontosVida -= dano; // Diminui a vida
+        pontosVida -= dano; // Diminui a vida de acordo com o dano causado
 
         // Garante que a vida não fique negativo, ela zera em vez disso
         if (pontosVida < 0) {
@@ -39,37 +43,40 @@ abstract class Personagem {
         }
     }
 
-    // Cura o personagem (sem ultrapassar o máximo)
+    /// Cura o personagem (sem ultrapassar o máximo)
     public void curar(short quantidade) {
-        // Se a quantidade for zero ou negativa, não faz nada.
+        // Se a quantidade for zero ou negativa, não faz nada (ele já está morto)
         if (quantidade <= 0) return;
 
-        // Quanto falta para encher a vida até o máximo
+        // Calcula o quanto falta para a vida do personagem chegar no limite
         int falta = vidaMax - pontosVida;
 
-        // Quantidade REAL que poderá ser curada
+        // Garante que a cura nunca passe do máximo permitido e nunca seja negativa
         int curada = Math.max(0, Math.min(falta, quantidade));
 
-        // Se não há nada para curar, avisa e encerra
+        // Se não há pontos para recuperar (vida já cheia), apenas mostra a mensagem e encerra
         if (curada == 0) {
             System.out.println(nome + " já está com HP cheio. (" + pontosVida + "/" + vidaMax + ")");
             return;
         }
 
         // Aplica a cura de fato
-        pontosVida += curada;
+        pontosVida += curada; // Adiciona a cura à vida
         System.out.println(nome + " recuperou " + curada + " pontos de vida. HP atual: " + pontosVida + "/" + vidaMax);
     }
 
-
-    // Subir de nível
+    /// Faz o personagem subir de nível
     public void subirNivel(int quantidade) {
+
+        // Aumenta o nível do personagem pelo número informado
         this.nivel += quantidade;
 
+        // Cada vez que sobe de nível, ele ganha um aumento em todos os atributos
         short aumentoVidaMax = (short) (5 * quantidade);
         short aumentoAtaque = (short) (2 * quantidade);
         short aumentoDefesa = (short) (1 * quantidade);
 
+        // Verifica qual é a classe do personagem e atribui a sua recompensa
         if (this instanceof Guerreiro) {
             aumentoVidaMax += (short) (3 * quantidade);
             aumentoDefesa += (short) (2 * quantidade);
@@ -94,14 +101,12 @@ abstract class Personagem {
         System.out.println("HP: " + pontosVida + "/" + vidaMax);
     }
 
-
-
     /// Atacar personagem
     public void atacar(Personagem alvo) {
 
         // Objeto Random que gera números aleatórios
         Random random = new Random();
-        short rolagem = (short) (random.nextInt(6) + 1); // Dado de 6 lados
+        short rolagem = (short) (random.nextInt(6) + 1); // Dado de 6 lados (5 + 1)
         short poderTotal = (short) (ataque + rolagem); // Soma o ataque do personagem + rolagem do dado resultando o poder total dele
 
         System.out.println("\n" + nome + " parte para o ataque contra " + alvo.nome + "!");
@@ -128,6 +133,7 @@ abstract class Personagem {
     /// Batalhar contra outro personagem
     public boolean batalhar(Inimigo inimigo, BufferedReader br, String local) throws IOException {
 
+        // Mensagens iniciais (abertura da batalha)
         System.out.println("\n================================================================");
         System.out.println("                 INÍCIO DA BATALHA");
         System.out.println("================================================================");
@@ -135,18 +141,22 @@ abstract class Personagem {
         System.out.println("Você: " + this.nome + "  VS  Inimigo: " + inimigo.nome);
         System.out.println("================================================================");
 
-        Random random = new Random();
-        int turno = 1;
 
+        Random random = new Random();
+        int turno = 1; // A batalha começa no primeiro turno
+
+        // A batalha continua enquanto os dois estiverem vivos
         while (this.estaVivo() && inimigo.estaVivo()) {
 
+            // Exibe o número do turno
             System.out.println("\n----------------------------------------------------------------");
             System.out.println("                       TURNO " + turno);
             System.out.println("----------------------------------------------------------------");
 
-            // TURNO DO JOGADOR
-            int escolha;
+            /// TURNO DO JOGADOR
+            int escolha; // Cria uma variável pra guardar o que o jogador vai escolher (atacar ou fugir)
 
+            // Mostra as opções (atacar e fugir) e lê o que o jogador digitou
             while (true) {
                 System.out.println("\nÉ o seu turno, " + nome + "!");
                 System.out.println("1 - Atacar");
@@ -154,6 +164,7 @@ abstract class Personagem {
                 System.out.print("Escolha um número: ");
                 String entrada = br.readLine().trim();
 
+                // Se a entrada que o usuário digitou não for válida
                 if (entrada.equals("1") || entrada.equals("2")) {
                     escolha = Integer.parseInt(entrada);
                     break;
@@ -162,8 +173,10 @@ abstract class Personagem {
                 }
             }
 
+            ///  Usuário escolheu atacar
             if (escolha == 1) {
 
+                // Pergunta se quer usar um item antes do ataque
                 int usarItem;
 
                 while (true) {
@@ -173,6 +186,7 @@ abstract class Personagem {
                     System.out.print("Escolha um número: ");
                     String entradaItem = br.readLine().trim();
 
+                    // Se a entrada que o usuário digitou não for válida
                     if (entradaItem.equals("1") || entradaItem.equals("2")) {
                         usarItem = Integer.parseInt(entradaItem);
                         break;
@@ -181,10 +195,14 @@ abstract class Personagem {
                     }
                 }
 
+                ///  Personagem decidiu usar item
                 if (usarItem == 1) {
+
+                    // Chama usarItem() para escolher e aplicar um item
                     Jogo.usarItem(this, inimigo, br);
 
                     // Mostra status completo após usar o item
+                    // Mostra na tela como ficou a vida, ataque e defesa do jogador e do inimigo depois de usar o item
                     System.out.println("\n=== STATUS APÓS USAR ITEM ===");
 
                     System.out.println(this.nome + " (JOGADOR)");
@@ -194,7 +212,6 @@ abstract class Personagem {
                     System.out.println("Defesa: " + this.defesa);
                     System.out.println("Nível: " + this.nivel);
 
-
                     System.out.println("\n" + inimigo.nome + " (INIMIGO)");
                     System.out.println("Vida Atual: " + inimigo.pontosVida);
                     System.out.println("Vida Máxima: " + inimigo.vidaMax);
@@ -202,36 +219,43 @@ abstract class Personagem {
                     System.out.println("Defesa: " + inimigo.defesa);
                     System.out.println("Nível: " + inimigo.nivel);
 
-
                     System.out.println("=======================================");
                 }
 
+                // Jogador ataca o inimigo usando o atacar()
                 this.atacar(inimigo);
             }
 
+            /// Jogador escolheu fugir
             else if (escolha == 2) {
-                Jogo.fugir(this, br, local);
-                return false; // já imprime tudo dentro de fugir()
-            }
-
-            else {
+                Jogo.fugir(this, br, local); // Chama fugir()
+                return false; // Retorna false porque a batalha terminou com fuga
+            } else {
                 System.out.println("Opção inválida! Escolha novamente.");
                 continue;
             }
 
-            // TURNO DO INIMIGO
+            /// TURNO DO INIMIGO
             if (inimigo.estaVivo()) {
+
+                // Mensagem do turno inimigo
                 System.out.println("\n----------------------------------------------------------------");
                 System.out.println("                   TURNO DO INIMIGO: " + inimigo.nome);
                 System.out.println("----------------------------------------------------------------");
 
+                // Verifica se o inimigo está congelado
+                /*
+                Se o inimigo estiver congelado, ele não pode atacar.
+                Caso contrário, ele ataca o jogador
+                */
                 if (inimigo.estaCongelado()) {
                     System.out.println(inimigo.nome + " está congelado e não pode agir neste turno!");
-                    inimigo.reduzirTurnoCongelado();
+                    inimigo.reduzirTurnoCongelado(); // Reduz o número de turnos que o inimigo ainda vai ficar congelado
                 } else {
                     inimigo.atacar(this);
                 }
 
+                // Se o jogador morrer mostra mensagem de derrota e encerra o programa
                 if (!this.estaVivo()) {
                     System.out.println("\nVocê foi derrotado por " + inimigo.nome + "...");
                     System.out.println("O Reino de Aurora cai nas sombras.");
@@ -240,51 +264,60 @@ abstract class Personagem {
                 }
             }
 
-            // STATUS APÓS O TURNO
+            // Status ao final do turno
             System.out.println("\n=================== STATUS APÓS O TURNO ===================");
             System.out.println(this.nome + " → HP: " + this.pontosVida + " | Ataque: " + this.ataque + " | Defesa: " + this.defesa);
             System.out.println(inimigo.nome + " → HP: " + inimigo.pontosVida + " | Ataque: " + inimigo.ataque + " | Defesa: " + inimigo.defesa);
             System.out.println("================================================================");
 
+            // Se ambos ainda estão vivos, mostra mensagem que a batalha continua
             if (this.estaVivo() && inimigo.estaVivo()) {
                 System.out.println("\nA batalha continua...");
             }
 
-            turno++;
+            turno++; // Soma 1 número ao turno
         }
 
-        // RESULTADO FINAL
+        ///  Fim da batalha resultado final
         System.out.println("\n================================================================");
+
+        // Se o jogador ainda está vivo e o inimigo morreu = vitória
         if (this.estaVivo() && !inimigo.estaVivo()) {
             System.out.println("VITÓRIA! " + this.nome + " derrotou " + inimigo.nome + "!");
+
+            // Subtrai 1 porque o contador foi incrementado uma última vez depois que a luta terminou, então ele está “um passo à frente
             System.out.println("Batalha encerrada em " + (turno - 1) + " turnos.");
             System.out.println("================================================================");
             return true;
         } else {
+            // Se o contrário = derrota
             System.out.println("DERROTA... " + this.nome + " caiu em combate.");
             System.out.println("================================================================");
             return false;
         }
     }
 
-    // Congela o personagem por uma certa quantidade de turnos (inimigo.congelar(2);)
+    /// Congelar personagem
+    // Congela personagem por uma certa quantidade de turnos
     public void congelar(int turnos) {
         this.turnosCongelado = turnos;
     }
 
-    // Verifica se o personagem ainda está congelado
+    /// Verifica se o personagem ainda está congelado
     public boolean estaCongelado() {
-        return this.turnosCongelado > 0; // True (está congelado)
+        // Se ainda estiver congelado retorna true, se não retorna false
+        return this.turnosCongelado > 0;
     }
 
-    // Diminui em 1 o número de turnos que o personagem ainda vai ficar congelado
+    /// Reduz o contador de turnos do personagem congelado
+    // Diminui em 1 a quantidade de turnos que o personagem ainda vai permanecer congelado
     public void reduzirTurnoCongelado() {
-        // Verifica se ainda tem turnos para o personagem ficar congelado
+        // Verifica se o personagem ainda está congelado (ou seja, se o número de turnos restantes é maior que zero)
         if (this.turnosCongelado > 0)
-            this.turnosCongelado--;
+            this.turnosCongelado--; // Se estiver congelado, diminui 1 turno
     }
 
-    // toString do personagem
+    /// ToString do personagem
     @Override
     public String toString() {
         return "\n===== STATUS DO PERSONAGEM =====" +
@@ -295,5 +328,4 @@ abstract class Personagem {
                 "\nDefesa: " + defesa +
                 "\nNível: " + nivel;
     }
-
 }

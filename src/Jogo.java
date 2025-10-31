@@ -3,7 +3,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Random;
 
-// Classe principal do Jogo
+/// Classe principal do Jogo
 public class Jogo {
 
     public static void main(String[] args) throws IOException {
@@ -25,7 +25,7 @@ public class Jogo {
         // Escolha do Pesonagem
         while (escolhaClasse == true) {
 
-            // Personagens e suas características
+            /// Personagens e suas características
             System.out.println("\nEscolha seu personagem");
             System.out.println("1 - Guerreiro");
             System.out.println("Alta vida (60 HP), boa defesa (10), ataque equilibrado (12).");
@@ -64,7 +64,7 @@ public class Jogo {
             }
         }
 
-        // Mostra status iniciais do personagem
+        /// Mostra status iniciais do personagem
         System.out.println("\n=== Status do Personagem ===");
         System.out.println(jogador);
         System.out.println("============================");
@@ -83,24 +83,21 @@ public class Jogo {
     public static void explorar(Personagem jogador, BufferedReader br) throws IOException {
         boolean explorando = true;
 
-        // salvar se ja foi ou não explorado
+        // Salvar se o lugar ja foi ou não explorado
         boolean florestaExplorada = false;
         boolean trilhaEsquerdaExplorada = false;
         boolean trilhaCentralExplorada = false;
         boolean trilhaDireitaExplorada = false;
 
-        // salvar se ja foi ou não explorado
+
         boolean cavernaExplorada = false;
         boolean tunelPrincipalExplorado = false;
         boolean salaCristaisExplorada = false;
         boolean lagoSubterraneoExplorado = false;
 
-        // salvar se ja foi ou não explorado
         boolean vilaExplorada = false;
 
-        // salvar se ja foi ou não explorado
         boolean montanhaExplorada = false;
-
 
         while (explorando) {
             System.out.println("\n=== Lugares para explorar ===");
@@ -113,7 +110,7 @@ public class Jogo {
 
             int opcao = Integer.parseInt(br.readLine());
 
-            // FLORESTA NEBULOSA
+            /// FLORESTA NEBULOSA
             if (opcao == 1) {
                 if (florestaExplorada) {
                     System.out.println("\nVocê já explorou completamente a Floresta Nebulosa. Não há mais nada de novo por aqui.");
@@ -143,7 +140,7 @@ public class Jogo {
                     System.out.print("Escolha o caminho: ");
                     int escolha = Integer.parseInt(br.readLine());
 
-                    // TRILHA ESQUERDA
+                    /// TRILHA ESQUERDA
                     if (escolha == 1 && !trilhaEsquerdaExplorada) {
                         System.out.println("\nVocê segue pela trilha da esquerda...");
                         System.out.println("Das sombras surge um zumbi!");
@@ -152,7 +149,7 @@ public class Jogo {
                         trilhaEsquerdaExplorada = true;
                     }
 
-                    // TRILHA CENTRAL
+                    /// TRILHA CENTRAL
                     else if (escolha == 2 && !trilhaCentralExplorada) {
                         System.out.println("\nVocê encontra um pequeno altar coberto por musgo e inscrições antigas...");
                         System.out.println("Um estranho brilho verde emana das pedras... parece reagir à sua presença.");
@@ -168,7 +165,7 @@ public class Jogo {
                         trilhaCentralExplorada = true;
                     }
 
-                    // TRILHA DIREITA
+                    /// TRILHA DIREITA
                     else if (escolha == 3 && !trilhaDireitaExplorada) {
                         System.out.println("\nVocê tenta sair rapidamente da trilha...");
                         System.out.println("Mas uma fera te avista e ataca!");
@@ -192,8 +189,7 @@ public class Jogo {
                 }
             }
 
-
-            // CAVERNA DAS SOMBRAS
+            /// CAVERNA DAS SOMBRAS
             else if (opcao == 2) {
                 if (cavernaExplorada) {
                     System.out.println("\nVocê já explorou completamente a Caverna das Sombras. O silêncio reina no subsolo...");
@@ -222,7 +218,7 @@ public class Jogo {
                     System.out.print("Escolha: ");
                     int escolha = Integer.parseInt(br.readLine());
 
-                    // TÚNEL PRINCIPAL
+                    /// TÚNEL PRINCIPAL
                     if (escolha == 1 && !tunelPrincipalExplorado) {
                         System.out.println("\nVocê avança pelo túnel principal...");
                         System.out.println("Do escuro surge um enorme Troll das Sombras!");
@@ -231,7 +227,7 @@ public class Jogo {
                         tunelPrincipalExplorado = true;
                     }
 
-                    // SALA DOS CRISTAIS
+                    /// SALA DOS CRISTAIS
                     else if (escolha == 2 && !salaCristaisExplorada) {
                         System.out.println("\nVocê entra em uma câmara iluminada por cristais azuis pulsantes...");
                         System.out.println("Ao se aproximar, um deles se destaca e flutua até sua mão!");
@@ -249,7 +245,7 @@ public class Jogo {
                         salaCristaisExplorada = true;
                     }
 
-                    // LAGO SUBTERRÂNEO
+                    /// LAGO SUBTERRÂNEO
                     else if (escolha == 3 && !lagoSubterraneoExplorado) {
                         System.out.println("\nVocê chega a um lago subterrâneo de águas negras...");
                         System.out.println("Algo se move sob a superfície, uma Serpente das Profundezas aparece!");
@@ -274,8 +270,7 @@ public class Jogo {
                 }
             }
 
-
-            // VILA ABANDONADA
+            /// VILA ABANDONADA
             else if (opcao == 3) {
                 if (vilaExplorada) {
                     System.out.println("\nVocê já passou pela Vila Abandonada. O silêncio permanece... nada mais pode ser feito aqui.");
@@ -318,8 +313,7 @@ public class Jogo {
                 vilaExplorada = true; // marca como já explorada
             }
 
-
-            // MONTANHA SOMBRIA
+            /// MONTANHA SOMBRIA
             else if (opcao == 4) {
                 if (montanhaExplorada) {
                     System.out.println("\nVocê já enfrentou o que havia na Montanha Sombria. O eco distante do dragão é tudo que resta...");
@@ -341,8 +335,7 @@ public class Jogo {
                 montanhaExplorada = true; // marca como já explorada
             }
 
-
-            // SAIR
+            /// SAIR
             else if (opcao == 5) {
                 System.out.println("\nVocê retorna ao menu principal.");
                 explorando = false;
@@ -468,6 +461,7 @@ public class Jogo {
         return venceu;
     }
 
+    /// Usar um item do inventário
     public static void usarItem(Personagem jogador, Personagem inimigo, BufferedReader br) throws IOException {
 
         // Verifica se o inventário está vazio
@@ -500,7 +494,8 @@ public class Jogo {
         if (sucesso) {
 
             /// ITENS DE CURA
-            // Contains não sabe diferencias com ou sem cento por isso preciso colocar os dois
+            // Itens que restauram pontos de vida
+            // Contains não sabe diferenciar com ou sem cento por isso preciso colocar os dois
             if (nomeItem.contains("poção de cura") || nomeItem.contains("pocao de cura")) {
                 jogador.curar((short) 20);
             } else if (nomeItem.contains("mirtilha")) {
@@ -508,6 +503,7 @@ public class Jogo {
             }
 
             /// ITENS DE DEFESA
+            // Itens que aumentam a defesa do personagem
             else if (nomeItem.contains("amuleto guardião") || nomeItem.contains("amuleto guardiao")) {
                 jogador.defesa += 20;
                 System.out.println("Você ganhou 20 pontos de defesa! Defesa atual: " + jogador.defesa + "\n");
@@ -518,19 +514,19 @@ public class Jogo {
 
             /// ITENS DE ATAQUE / DANO
             else if (nomeItem.contains("orbe do desespero")) {
-                inimigo.receberDano((short) 8);
+                inimigo.receberDano((short) 8); // Causa dano diretamente no inimigo
                 System.out.println("Você libera uma onda de energia! O inimigo perde 8 de vida. HP inimigo: " + inimigo.pontosVida + "\n");
             } else if (nomeItem.contains("fúria") || nomeItem.contains("furia")) {
                 jogador.ataque += 12;
                 System.out.println("Você entra em fúria! +12 de ataque. Ataque atual: " + jogador.ataque + "\n");
             } else if (nomeItem.contains("elixir do vento")) {
-                inimigo.congelar(1);
+                inimigo.congelar(1); // Congela inimigo por 1 turno
                 System.out.println("Você congela o inimigo por um turno!\n");
             } else if (nomeItem.contains("flecha")) {
-                inimigo.receberDano((short) 5);
+                inimigo.receberDano((short) 5); // Causa 5 danos
                 System.out.println("Você dispara a Flecha Envenenada! O inimigo perde 5 pontos de vida.\n");
             } else if (nomeItem.contains("faca")) {
-                inimigo.receberDano((short) 5);
+                inimigo.receberDano((short) 5); // Causa 5 danos
                 System.out.println("Você golpeia o inimigo com sua faca e causa 5 pontos de dano!\n");
             }
             else if (nomeItem.contains("cristal das sombras")) {
@@ -545,8 +541,8 @@ public class Jogo {
                 jogador.defesa += 25;
                 System.out.println("Os espíritos protetores o envolvem! +25 de defesa. Defesa atual: " + jogador.defesa + "\n");
             } else if (nomeItem.contains("anel da eternidade")) {
-                jogador.vidaMax += 100;   // aumenta o HP máximo
-                jogador.curar((short) 100); // recupera até o novo máximo
+                jogador.vidaMax += 100;   // Isso aumenta o limite máximo de vida do personagem
+                jogador.curar((short) 100); // Aqui o personagem recupera 100 pontos de vida (até o novo máximo)
                 System.out.println("O poder do Anel da Eternidade flui em você! +100 de Vida Máxima.");
                 System.out.println("HP atual: " + jogador.pontosVida + "/" + jogador.vidaMax + "\n");
             } else if (nomeItem.contains("orbe das almas")) {
@@ -557,7 +553,10 @@ public class Jogo {
 
             /// ITEM DE EFEITO ALEATÓRIO
             else if (nomeItem.contains("relíquia") || nomeItem.contains("reliquia")) {
-                int efeito = random.nextInt(3); // sorteia o efeito
+
+                // sorteia o efeito (números 0, 1 ou 2)
+                int efeito = random.nextInt(3);
+
                 switch (efeito) {
                     case 0:
                         jogador.ataque += 10;
@@ -595,13 +594,17 @@ public class Jogo {
     public static void fugir(Personagem jogador, BufferedReader br, String local) throws IOException {
         System.out.println("\nVocê tenta fugir...");
 
-        // Não é possível fugir do dração Rex
+        // Caso especial: o dragão Rex (não é possível fugir do dração Rex)
+        // Verifica se o local atual tem a palavra "Montanha" ou "Rex"
         if (local.contains("Montanha") || local.contains("Rex")) {
             System.out.println("Você dá alguns passos para trás, mas o chão treme violentamente...");
             System.out.println("O rugido ensurdecedor de Rex ecoa pela montanha!");
             System.out.println("Uma torrente de fogo cobre tudo ao seu redor!");
-            jogador.receberDano(jogador.pontosVida); // dano letal
 
+            // Aplica dano igual à vida total do jogador, ou seja, o personagem morre instantaneamente
+            jogador.receberDano(jogador.pontosVida);
+
+            /// Personagem é derrotado pelo dragão Rex
             System.out.println("\n=== DERROTA ===");
             System.out.println("Você foi engolido pelas chamas do dragão Rex...");
             System.out.println("O Reino de Aurora cai nas sombras mais uma vez.");
@@ -610,9 +613,12 @@ public class Jogo {
             return;
         }
 
+        // Caso comum: fugas de outros inimigos
+        // Cria um número aleatório de 1 a 6
         Random random = new Random();
         int rolagem = random.nextInt(6) + 1;
 
+        // Determina onde o jogador se esconde e mostra uma descrição diferente para cada lugar
         String esconderijo;
 
         if (local.contains("Floresta")) {
@@ -629,27 +635,34 @@ public class Jogo {
 
         System.out.println("Você se esconde " + esconderijo + " por um certo tempo e logo retoma a exploração.");
 
+        // Decide se a fuga foi bem-sucedido (se o número sorteado for par, o jogador escapa com sucesso)
         if (rolagem % 2 == 0) {
             System.out.println("Você respira aliviado e continua sua jornada.");
             System.out.println("Você consegue escapar com sucesso!");
         } else {
+            // Se o número foi ímpar, o jogador tropeça e leva um golpe antes de fugir
             System.out.println("Você tropeça ao tentar fugir!");
             System.out.println("O inimigo te alcança e acerta um golpe antes de você escapar!");
 
-            short dano = 8; // dano ligeiramente menor para equilibrar
+            // O jogador perde 8 pontos de vida como penalidade
+            short dano = 8;
             jogador.receberDano(dano);
+
             System.out.println("Você perdeu " + dano + " pontos de vida. HP atual: " + jogador.pontosVida);
 
-            // Mostra status completo após levar dano
+            // Mostra o status completo do personagem depois da tentativa
             System.out.println("\n=== STATUS APÓS A TENTATIVA DE FUGA ===");
             System.out.println(jogador);
             System.out.println("=======================================\n");
 
+            // Caso o jogador morra durante a fuga
+            // Só morre se o jogador estiver com pouca vida e esse dano de 8 for suficiente para zerar os pontos de vida
             if (!jogador.estaVivo()) {
                 System.out.println("\nVocê não resistiu ao golpe durante a fuga...");
                 System.out.println("Fim de jogo!");
                 System.exit(0);
             } else {
+                // Caso sobreviva
                 System.out.println("Mesmo ferido, você consegue se afastar do perigo.");
                 System.out.println("Você respira aliviado e continua sua jornada.");
                 System.out.println("Você consegue escapar com sucesso!");
