@@ -1,12 +1,13 @@
-/// Classe Item (obrigatório tem um compareTo())
+/// Classe Item
+// Nela é permitida comparar dois itens (Comparable) e criar cópiar idênticas (Cloneable - clone())
 public class Item implements Comparable<Item>, Cloneable {
     private String nome;
     private String descricao;
     private String efeito;
     private int quantidade;
 
-    /// Construtor da classe Itens
-    // Chamado quando você cria um item
+    /// Construtor padrão
+    // É chamado toda vez que cria um novo item
     public Item (String nome, String descricao, String efeito, int quantidade){
         this.nome = nome;
         this.descricao = descricao;
@@ -36,7 +37,7 @@ public class Item implements Comparable<Item>, Cloneable {
         this.quantidade = quantidade;
     }
 
-    /// toString() do Item
+    /// ToString() do Item
     @Override
     public String toString(){
         return "Nome: "+nome+", Descrição: "+descricao+", Efeito: "+efeito+", Quantidade: "+quantidade;
@@ -117,7 +118,6 @@ public class Item implements Comparable<Item>, Cloneable {
         ret = 2 * ret + (efeito == null ? 0 : efeito.toLowerCase().hashCode());
         return ret;
     }
-
 }
 
 
