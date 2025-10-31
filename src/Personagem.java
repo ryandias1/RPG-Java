@@ -104,7 +104,9 @@ abstract class Personagem {
             System.out.println("O golpe de " + nome + " acerta " + alvo.nome + " e causa " + dano + " de dano!");
             System.out.println("Vida restante de " + alvo.nome + ": " + alvo.pontosVida);
         } else {
-            System.out.println("\n" + alvo.nome + " bloqueia o ataque de " + nome + "!");
+            System.out.println("\n" + nome + " ataca, mas " + alvo.nome + " bloqueia o golpe!");
+            System.out.println("(Poder total do ataque de " + nome + ": " + poderTotal + " | Defesa de " + alvo.nome + ": " + alvo.defesa + ")");
+            System.out.println("O ataque não foi forte o suficiente para causar dano!");
         }
     }
 
@@ -131,21 +133,37 @@ abstract class Personagem {
             System.out.println("\nÉ o seu turno, " + nome + "!");
             System.out.println("1 - Atacar");
             System.out.println("2 - Tentar fugir");
-            System.out.print("Escolha uma ação: ");
+            System.out.print("Escolha um número: ");
             int escolha = Integer.parseInt(br.readLine());
 
             if (escolha == 1) {
                 System.out.println("\nDeseja usar um item antes de atacar?");
                 System.out.println("1 - Sim");
                 System.out.println("2 - Não");
-                System.out.print("Escolha: ");
+                System.out.print("Escolha um número: ");
                 int usarItem = Integer.parseInt(br.readLine());
 
                 if (usarItem == 1) {
                     Jogo.usarItem(this, inimigo, br);
+
+                    // Mostra status completo após usar o item
+                    System.out.println("\n=== STATUS APÓS USAR ITEM ===");
+
+                    System.out.println(this.nome + " (JOGADOR)");
+                    System.out.println("Vida Atual / Vida Máxima: " + this.pontosVida + " / " + this.vidaMax);
+                    System.out.println("Ataque: " + this.ataque);
+                    System.out.println("Defesa: " + this.defesa);
+                    System.out.println("Nível: " + this.nivel);
+
+                    System.out.println("\n" + inimigo.nome + " (INIMIGO)");
+                    System.out.println("Vida Atual / Vida Máxima: " + inimigo.pontosVida + " / " + inimigo.vidaMax);
+                    System.out.println("Ataque: " + inimigo.ataque);
+                    System.out.println("Defesa: " + inimigo.defesa);
+                    System.out.println("Nível: " + inimigo.nivel);
+
+                    System.out.println("=======================================");
                 }
 
-                System.out.println("\nVocê parte para o ataque!");
                 this.atacar(inimigo);
             }
 
@@ -190,7 +208,7 @@ abstract class Personagem {
             System.out.println("\n=================== STATUS APÓS O TURNO ===================");
             System.out.println(this.nome + " → HP: " + this.pontosVida + " | Ataque: " + this.ataque + " | Defesa: " + this.defesa);
             System.out.println(inimigo.nome + " → HP: " + inimigo.pontosVida + " | Ataque: " + inimigo.ataque + " | Defesa: " + inimigo.defesa);
-            System.out.println("============================================================");
+            System.out.println("================================================================");
 
             if (this.estaVivo() && inimigo.estaVivo()) {
                 System.out.println("\nA batalha continua...");
@@ -235,7 +253,7 @@ abstract class Personagem {
     @Override
     public String toString() {
         return "\nNome: " + nome +
-                "\nHP: " + pontosVida + "/" + vidaMax +
+                "\nVida Atual / Vida Máxima: " + pontosVida + " / " + vidaMax +
                 "\nAtaque: " + ataque +
                 "\nDefesa: " + defesa +
                 "\nNível: " + nivel + "\n";

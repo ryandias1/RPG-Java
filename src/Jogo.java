@@ -170,7 +170,7 @@ public class Jogo {
                         System.out.println("Você recebeu o item: " + amuleto.getNome() + "!");
                         jogador.vidaMax += 10;
                         jogador.curar((short)10);
-                        System.out.println("Sua energia aumenta! HP atual: " + jogador.pontosVida);
+
                         trilhaCentralExplorada = true;
                     }
 
@@ -357,7 +357,7 @@ public class Jogo {
         }
     }
 
-    // BATALHAR CONTRA UM INIMIGO
+    /// BATALHAR CONTRA UM INIMIGO
     public static boolean batalhar(Personagem jogador, Inimigo inimigo, BufferedReader br, String local) throws IOException {
         System.out.println("\n===BATALHA CONTRA " + inimigo.nome.toUpperCase() + " ===");
 
@@ -384,14 +384,7 @@ public class Jogo {
         }
 
         if (venceu) {
-            System.out.println("\nVocê venceu a batalha contra " + inimigo.nome + "!");
             System.out.println("Você vasculha o corpo do inimigo em busca de algo útil...");
-
-
-
-            // Mostra status atualizado do jogador após a luta
-            System.out.println("\nSeu estado atual após a batalha:");
-            System.out.println(jogador);
 
             // Sistema de Drop Aleatório (sistema de sorteio para gerar números ou resultados aleatórios)
             Random random = new Random();
@@ -441,7 +434,6 @@ public class Jogo {
                 }
             }
 
-
             if (inimigo.nome.contains("Rex")){
                 jogador.nivel += 5;
                 System.out.println("\nVocê subiu 5 níveis!");
@@ -458,12 +450,17 @@ public class Jogo {
                 jogador.nivel += 1;
                 System.out.println("\nVocê subiu 1 nível!");
             }
+
+            // Mostra status atualizado do jogador após a luta
+            System.out.println("\nSeu estado atual após a batalha:");
+            System.out.println(jogador);
         }
         return venceu;
     }
 
     public static void usarItem(Personagem jogador, Personagem inimigo, BufferedReader br) throws IOException {
 
+        // Verifica se o inventário está vazio
         if (jogador.inventario.estaVazio()) {
             System.out.println("Seu inventário está vazio!");
             System.out.println("Você não pode usar nenhum item agora.");
@@ -471,84 +468,92 @@ public class Jogo {
             return;
         }
 
+        // Mostra todos os itens disponíveis
         jogador.inventario.listarItens();
-        System.out.println("=======================");
-        System.out.print("Digite o nome do item que deseja usar: ");
-        String nomeItem = br.readLine().trim();
 
-        // Verifica se o item existe antes de tentar usar
+        // Solicita o nome do item que o jogador quer usar
+        System.out.print("Digite o nome do item que deseja usar: ");
+        String nomeItem = br.readLine().trim().toLowerCase(); // Converte tudo para minúsculo para facilitar a comparação
+
+        // Verifica se o item realmente existe no inventário
         if (!jogador.inventario.temItem(nomeItem)) {
             System.out.println("Esse item não está no seu inventário!");
             return;
         }
 
+        // Cria um número aleatório (1 a 6) para definir o sucesso do uso
         Random random = new Random();
         int dado = random.nextInt(6) + 1;
-        boolean sucesso = dado >= 4;
+        boolean sucesso = dado >= 4; // Sucesso se tirar 4, 5 ou 6
 
+        // Caso o jogador consiga usar o item com sucesso
         if (sucesso) {
-            System.out.println("\nVocê usa o item " + nomeItem + " com sucesso!");
 
-            if (nomeItem.equalsIgnoreCase("Poção de Cura")) {
+            /// ITENS DE CURA
+            // Contains não sabe diferencias com ou sem cento por isso preciso colocar os dois
+            if (nomeItem.contains("poção de cura") || nomeItem.contains("pocao de cura")) {
                 jogador.curar((short)20);
-                System.out.println("Você recuperou 20 pontos de vida! HP atual: " + jogador.pontosVida + "\n");
             }
-            else if (nomeItem.equalsIgnoreCase("Raiz de Mirtilha")) {
+            else if (nomeItem.contains("mirtilha")) {
                 jogador.curar((short)8);
-                System.out.println("Você recuperou 8 pontos de vida! HP atual: " + jogador.pontosVida + "\n");
             }
-            else if (nomeItem.equalsIgnoreCase("Amuleto Guardião")) {
+
+            /// ITENS DE DEFESA
+            else if (nomeItem.contains("amuleto guardião") || nomeItem.contains("amuleto guardiao")) {
                 jogador.defesa += 20;
                 System.out.println("Você ganhou 20 pontos de defesa! Defesa atual: " + jogador.defesa + "\n");
             }
-            else if (nomeItem.equalsIgnoreCase("Escudo Velho")) {
+            else if (nomeItem.contains("escudo")) {
                 jogador.defesa += 5;
                 System.out.println("Você ganhou 5 pontos de defesa! Defesa atual: " + jogador.defesa + "\n");
             }
-            else if (nomeItem.equalsIgnoreCase("Orbe do Desespero")) {
+
+            /// ITENS DE ATAQUE / DANO
+            else if (nomeItem.contains("orbe do desespero")) {
                 inimigo.pontosVida -= 8;
                 System.out.println("Você libera uma onda de energia! O inimigo perde 8 de vida. HP inimigo: " + inimigo.pontosVida + "\n");
             }
-            else if (nomeItem.equalsIgnoreCase("Poção de Fúria")) {
+            else if (nomeItem.contains("fúria") || nomeItem.contains("furia")) {
                 jogador.ataque += 12;
                 System.out.println("Você entra em fúria! +12 de ataque. Ataque atual: " + jogador.ataque + "\n");
             }
-            else if (nomeItem.equalsIgnoreCase("Elixir do Vento Adormecido")) {
+            else if (nomeItem.contains("elixir do vento")) {
                 inimigo.congelar(1);
                 System.out.println("Você congela o inimigo por um turno!\n");
             }
-            else if (nomeItem.equalsIgnoreCase("Flecha Envenenada")) {
+            else if (nomeItem.contains("flecha")) {
                 inimigo.pontosVida -= 5;
                 System.out.println("Você dispara a Flecha Envenenada! O inimigo perde 5 pontos de vida.\n");
-                jogador.inventario.removerItem(nomeItem, 1);
             }
-            else if (nomeItem.equalsIgnoreCase("Faca Inicial")) {
+            else if (nomeItem.contains("faca")) {
                 inimigo.pontosVida -= 5;
                 System.out.println("Você golpeia o inimigo com sua faca e causa 5 pontos de dano!\n");
             }
 
-            // ITENS LENDÁRIOS
-            else if (nomeItem.equalsIgnoreCase("Espada do Crepúsculo")) {
+            /// ITENS LENDÁRIOS
+            else if (nomeItem.contains("espada do crepúsculo") || nomeItem.contains("espada do crepusculo")) {
                 jogador.ataque += 30;
                 System.out.println("O poder do crepúsculo flui através de você! +30 de ataque. Ataque atual: " + jogador.ataque + "\n");
             }
-            else if (nomeItem.equalsIgnoreCase("Armadura do Guardião Ancestral")) {
+            else if (nomeItem.contains("armadura do guardião") || nomeItem.contains("armadura do guardiao")) {
                 jogador.defesa += 25;
                 System.out.println("Os espíritos protetores o envolvem! +25 de defesa. Defesa atual: " + jogador.defesa + "\n");
             }
-            else if (nomeItem.equalsIgnoreCase("Anel da Eternidade")) {
-                jogador.vidaMax += 100;  // aumenta o HP máximo
+            else if (nomeItem.contains("anel da eternidade")) {
+                jogador.vidaMax += 100;   // aumenta o HP máximo
                 jogador.curar((short)100); // recupera até o novo máximo
                 System.out.println("O poder do Anel da Eternidade flui em você! +100 de Vida Máxima.");
                 System.out.println("HP atual: " + jogador.pontosVida + "/" + jogador.vidaMax + "\n");
             }
-            else if (nomeItem.equalsIgnoreCase("Orbe das Almas Perdidas")) {
+            else if (nomeItem.contains("orbe das almas")) {
                 jogador.ataque += 15;
                 jogador.defesa += 10;
                 System.out.println("As almas derrotadas fortalecem você! +15 de ataque, +10 de defesa.\n");
             }
-            else if (nomeItem.equalsIgnoreCase("Relíquia Desconhecida")) {
-                int efeito = random.nextInt(3);
+
+            /// ITEM DE EFEITO ALEATÓRIO
+            else if (nomeItem.contains("relíquia") || nomeItem.contains("reliquia")) {
+                int efeito = random.nextInt(3); // sorteia o efeito
                 switch (efeito) {
                     case 0:
                         jogador.ataque += 10;
@@ -567,15 +572,18 @@ public class Jogo {
                 }
             }
 
-            // Caso o item não tenha efeito conhecido
+            /// ITEM SEM EFEITO CONHECIDO
             else {
-                System.out.println("Você usa o item " + nomeItem + ", mas nada acontece... talvez seu poder ainda seja desconhecido.\n");
+                System.out.println("Você usa o item, mas nada acontece... talvez seu poder ainda seja desconhecido.\n");
             }
 
+            // Ao final, remove 1 unidade do item utilizado
             jogador.inventario.removerItem(nomeItem, 1);
+        }
 
-        } else {
-            System.out.println("\nVocê tenta usar o item " + nomeItem + ", mas falha miseravelmente!\n");
+        // Caso o uso do item falhe (rolagem do dado ruim)
+        else {
+            System.out.println("\nVocê tenta usar o item, mas falha miseravelmente!\n");
         }
     }
 

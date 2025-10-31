@@ -39,8 +39,8 @@ public class Inventario implements Cloneable {
         for (int i = 0; i < itens.size(); i++) {
             Item item = itens.get(i); // Pega o item atual da lista na posição i
 
-            // Verifica se o nome do item atual é igual ao nome passado como parâmetro
-            if (item.getNome().toLowerCase().equals(nomeItem.toLowerCase())) {
+            // Verifica se o texto digitado pelo jogador corresponde (mesmo parcialmente - contains) ao nome do item
+            if (item.getNome().toLowerCase().contains(nomeItem.toLowerCase())) {
                 int novaQtd = item.getQuantidade() - quantidade; // Calcula quanto vai sobrar do item depois da remoção
 
                 // Se ainda sobrar atualiza a quantidade
