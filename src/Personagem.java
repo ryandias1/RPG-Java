@@ -41,12 +41,26 @@ abstract class Personagem {
 
     // Cura o personagem (sem ultrapassar o máximo)
     public void curar(short quantidade) {
-        pontosVida += quantidade;
-        if (pontosVida > vidaMax)
-            pontosVida = vidaMax;
+        // Se a quantidade for zero ou negativa, não faz nada.
+        if (quantidade <= 0) return;
 
-        System.out.println(nome + " recuperou " + quantidade + " pontos de vida. HP atual: " + pontosVida + "/" + vidaMax);
+        // Quanto falta para encher a vida até o máximo
+        int falta = vidaMax - pontosVida;
+
+        // Quantidade REAL que poderá ser curada
+        int curada = Math.max(0, Math.min(falta, quantidade));
+
+        // Se não há nada para curar, avisa e encerra
+        if (curada == 0) {
+            System.out.println(nome + " já está com HP cheio. (" + pontosVida + "/" + vidaMax + ")");
+            return;
+        }
+
+        // Aplica a cura de fato
+        pontosVida += curada;
+        System.out.println(nome + " recuperou " + curada + " pontos de vida. HP atual: " + pontosVida + "/" + vidaMax);
     }
+
 
     // Subir de nível
     public void subirNivel(int quantidade) {
@@ -70,12 +84,13 @@ abstract class Personagem {
         this.ataque += aumentoAtaque;
         this.defesa += aumentoDefesa;
 
-        // Recupera um pouco de HP ao subir de nível
-        curar((short)(aumentoVidaMax / 2));
-
         System.out.println("\n=== SUBIU DE NÍVEL! ===");
         System.out.println("Novo nível: " + this.nivel);
         System.out.println("Ganhou +" + aumentoVidaMax + " Vida Máxima, +" + aumentoAtaque + " Ataque, +" + aumentoDefesa + " Defesa!");
+
+        // cura e mostra o resultado final
+        curar((short)(aumentoVidaMax / 2));
+
         System.out.println("HP: " + pontosVida + "/" + vidaMax);
     }
 
@@ -86,7 +101,7 @@ abstract class Personagem {
 
         // Objeto Random que gera números aleatórios
         Random random = new Random();
-        short rolagem = (short) (random.nextInt(6) + 1); // Dado de 6 lados (5 + 1)
+        short rolagem = (short) (random.nextInt(6) + 1); // Dado de 6 lados
         short poderTotal = (short) (ataque + rolagem); // Soma o ataque do personagem + rolagem do dado resultando o poder total dele
 
         System.out.println("\n" + nome + " parte para o ataque contra " + alvo.nome + "!");
@@ -173,16 +188,20 @@ abstract class Personagem {
                     System.out.println("\n=== STATUS APÓS USAR ITEM ===");
 
                     System.out.println(this.nome + " (JOGADOR)");
-                    System.out.println("Vida Atual / Vida Máxima: " + this.pontosVida + " / " + this.vidaMax);
+                    System.out.println("Vida Atual: " + this.pontosVida);
+                    System.out.println("Vida Máxima: " + this.vidaMax);
                     System.out.println("Ataque: " + this.ataque);
                     System.out.println("Defesa: " + this.defesa);
                     System.out.println("Nível: " + this.nivel);
 
+
                     System.out.println("\n" + inimigo.nome + " (INIMIGO)");
-                    System.out.println("Vida Atual / Vida Máxima: " + inimigo.pontosVida + " / " + inimigo.vidaMax);
+                    System.out.println("Vida Atual: " + inimigo.pontosVida);
+                    System.out.println("Vida Máxima: " + inimigo.vidaMax);
                     System.out.println("Ataque: " + inimigo.ataque);
                     System.out.println("Defesa: " + inimigo.defesa);
                     System.out.println("Nível: " + inimigo.nivel);
+
 
                     System.out.println("=======================================");
                 }
@@ -268,10 +287,13 @@ abstract class Personagem {
     // toString do personagem
     @Override
     public String toString() {
-        return "\nNome: " + nome +
-                "\nVida Atual / Vida Máxima: " + pontosVida + " / " + vidaMax +
+        return "\n===== STATUS DO PERSONAGEM =====" +
+                "\nNome: " + nome +
+                "\nVida Atual: " + pontosVida +
+                "\nVida Máxima: " + vidaMax +
                 "\nAtaque: " + ataque +
                 "\nDefesa: " + defesa +
-                "\nNível: " + nivel + "\n";
+                "\nNível: " + nivel;
     }
+
 }

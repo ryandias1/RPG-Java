@@ -158,14 +158,12 @@ public class Jogo {
                         System.out.println("Um estranho brilho verde emana das pedras... parece reagir à sua presença.");
 
                         System.out.println("Você se aproxima e toca o altar...");
-                        System.out.println("De repente, uma luz intensa envolve sua mão e um objeto se materializa diante de você!");
+                        System.out.println("De repente, uma luz intensa envolve sua mão e um objeto se materializa diante de você!\n1");
 
-                        Item amuleto = new Item("Amuleto da Floresta", "Um amuleto antigo que pulsa com energia natural", "+10 HP Máximo", 1);
-                        jogador.inventario.adicionarItem(amuleto);
-
-                        System.out.println("Você recebeu o item: " + amuleto.getNome() + "!");
                         jogador.vidaMax += 10;
-                        jogador.curar((short) 10);
+                        System.out.println("Você recebeu a bênção do Amuleto da Floresta!");
+                        System.out.println("Seu HP máximo aumentou em 10 pontos!");
+                        System.out.println("HP: " + jogador.pontosVida + "/" + jogador.vidaMax);;
 
                         trilhaCentralExplorada = true;
                     }
@@ -241,8 +239,8 @@ public class Jogo {
                         Item cristal = new Item("Cristal das Sombras", "Emite energia mágica intensa", "+15 ataque", 1);
                         jogador.inventario.adicionarItem(cristal);
                         System.out.println("Você obteve: " + cristal.getNome() + "! Seu corpo vibra com poder arcano...");
-                        jogador.ataque += 5;
-                        System.out.println("Seu ataque aumentou! Ataque atual: " + jogador.ataque);
+                        jogador.ataque += 15;
+                        System.out.println("Seu ataque máximo aumentou! Ataque atual: " + jogador.ataque);
 
                         System.out.println("\n=== Status Atual Após o Ganho do Cristal ===");
                         System.out.println(jogador);
@@ -361,12 +359,14 @@ public class Jogo {
         // Mostra status iniciais antes da luta
         System.out.println("\n   Você:");
         System.out.println("   Vida: " + jogador.pontosVida);
+        System.out.println("   Vida Máx: " + jogador.vidaMax);
         System.out.println("   Ataque: " + jogador.ataque);
         System.out.println("   Defesa: " + jogador.defesa);
 
         System.out.println("\n   Inimigo:");
         System.out.println("   Nome: " + inimigo.nome);
         System.out.println("   Vida: " + inimigo.pontosVida);
+        System.out.println("   Vida Máx: " + inimigo.vidaMax);
         System.out.println("   Ataque: " + inimigo.ataque);
         System.out.println("   Defesa: " + inimigo.defesa);
         System.out.println("\nPrepare-se para o combate!\n");
@@ -407,7 +407,7 @@ public class Jogo {
                         itemDropado = new Item("Escudo Velho", "Fornece leve proteção", "+5 defesa", 1);
                         break;
                     case 5:
-                        itemDropado = new Item("Orbe do Desespero", "Libera uma onda de energia que causa dano aos inimigos", "+30 ataque", 1);
+                        itemDropado = new Item("Orbe do Desespero", "Libera uma onda de energia que causa dano aos inimigos", "8 de dano ao inimigo", 1);
                         break;
                     case 6:
                         itemDropado = new Item("Poção de Fúria", "Uma poção que aumenta a força", "+12 ataque", 1);
@@ -444,22 +444,22 @@ public class Jogo {
                 }
             }
 
+            int niveisGanho;
+
             if (inimigo.nome.contains("Rex")) {
-                jogador.nivel += 5;
-                System.out.println("\nVocê subiu 5 níveis!");
+                niveisGanho = 5;
             } else if (inimigo.nome.contains("Zumbi")) {
-                jogador.nivel += 1;
-                System.out.println("\nVocê subiu 1 nível!");
+                niveisGanho = 1;
             } else if (inimigo.nome.contains("Troll das Sombras")) {
-                jogador.nivel += 2;
-                System.out.println("\nVocê subiu 2 níveis!");
+                niveisGanho = 2;
             } else if (inimigo.nome.contains("Lobo Sombrio")) {
-                jogador.nivel += 3;
-                System.out.println("\nVocê subiu 3 níveis!");
+                niveisGanho = 3;
             } else {
-                jogador.nivel += 1;
-                System.out.println("\nVocê subiu 1 nível!");
+                niveisGanho = 1;
             }
+
+            // Chama o método subirNivel da classe Personagem
+            jogador.subirNivel(niveisGanho);
 
             // Mostra status atualizado do jogador após a luta
             System.out.println("\nSeu estado atual após a batalha:");
@@ -518,7 +518,7 @@ public class Jogo {
 
             /// ITENS DE ATAQUE / DANO
             else if (nomeItem.contains("orbe do desespero")) {
-                inimigo.pontosVida -= 8;
+                inimigo.receberDano((short) 8);
                 System.out.println("Você libera uma onda de energia! O inimigo perde 8 de vida. HP inimigo: " + inimigo.pontosVida + "\n");
             } else if (nomeItem.contains("fúria") || nomeItem.contains("furia")) {
                 jogador.ataque += 12;
@@ -527,11 +527,14 @@ public class Jogo {
                 inimigo.congelar(1);
                 System.out.println("Você congela o inimigo por um turno!\n");
             } else if (nomeItem.contains("flecha")) {
-                inimigo.pontosVida -= 5;
+                inimigo.receberDano((short) 5);
                 System.out.println("Você dispara a Flecha Envenenada! O inimigo perde 5 pontos de vida.\n");
             } else if (nomeItem.contains("faca")) {
-                inimigo.pontosVida -= 5;
+                inimigo.receberDano((short) 5);
                 System.out.println("Você golpeia o inimigo com sua faca e causa 5 pontos de dano!\n");
+            }
+            else if (nomeItem.contains("cristal das sombras")) {
+                System.out.println("O cristal já infundiu seu poder quando foi obtido. Nada acontece desta vez.\n");
             }
 
             /// ITENS LENDÁRIOS
