@@ -130,18 +130,41 @@ abstract class Personagem {
             System.out.println("----------------------------------------------------------------");
 
             // TURNO DO JOGADOR
-            System.out.println("\nÉ o seu turno, " + nome + "!");
-            System.out.println("1 - Atacar");
-            System.out.println("2 - Tentar fugir");
-            System.out.print("Escolha um número: ");
-            int escolha = Integer.parseInt(br.readLine());
+            int escolha;
+
+            while (true) {
+                System.out.println("\nÉ o seu turno, " + nome + "!");
+                System.out.println("1 - Atacar");
+                System.out.println("2 - Tentar fugir");
+                System.out.print("Escolha um número: ");
+                String entrada = br.readLine().trim();
+
+                if (entrada.equals("1") || entrada.equals("2")) {
+                    escolha = Integer.parseInt(entrada);
+                    break;
+                } else {
+                    System.out.println("\nOpção inválida! Digite apenas 1 ou 2.\n");
+                }
+            }
 
             if (escolha == 1) {
-                System.out.println("\nDeseja usar um item antes de atacar?");
-                System.out.println("1 - Sim");
-                System.out.println("2 - Não");
-                System.out.print("Escolha um número: ");
-                int usarItem = Integer.parseInt(br.readLine());
+
+                int usarItem;
+
+                while (true) {
+                    System.out.println("\nDeseja usar um item antes de atacar?");
+                    System.out.println("1 - Sim");
+                    System.out.println("2 - Não");
+                    System.out.print("Escolha um número: ");
+                    String entradaItem = br.readLine().trim();
+
+                    if (entradaItem.equals("1") || entradaItem.equals("2")) {
+                        usarItem = Integer.parseInt(entradaItem);
+                        break;
+                    } else {
+                        System.out.println("\nOpção inválida! Digite apenas 1 ou 2.\n");
+                    }
+                }
 
                 if (usarItem == 1) {
                     Jogo.usarItem(this, inimigo, br);
@@ -230,7 +253,6 @@ abstract class Personagem {
             return false;
         }
     }
-
 
     // Congela o personagem por uma certa quantidade de turnos (inimigo.congelar(2);)
     public void congelar(int turnos) {

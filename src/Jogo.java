@@ -251,13 +251,18 @@ public class Jogo {
                         System.out.println("Você obteve: " + cristal.getNome() + "! Seu corpo vibra com poder arcano...");
                         jogador.ataque += 5;
                         System.out.println("Seu ataque aumentou! Ataque atual: " + jogador.ataque);
+
+                        System.out.println("\n=== Status Atual Após o Ganho do Cristal ===");
+                        System.out.println(jogador);
+                        System.out.println("============================================");
+
                         salaCristaisExplorada = true;
                     }
 
                     // LAGO SUBTERRÂNEO
                     else if (escolha == 3 && !lagoSubterraneoExplorado) {
                         System.out.println("\nVocê chega a um lago subterrâneo de águas negras...");
-                        System.out.println("Algo se move sob a superfície — uma Serpente das Profundezas aparece!");
+                        System.out.println("Algo se move sob a superfície, uma Serpente das Profundezas aparece!");
 
                         Inimigo serpente = new Inimigo("Serpente das Profundezas", (short)35, (short)14, (short)5, (short)2, new Inventario());
                         batalhar(jogador, serpente, br, "Caverna das Sombras");
