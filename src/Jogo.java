@@ -46,23 +46,20 @@ public class Jogo {
 
             if (opcao == 1) {
                 // Cria um objeto do tipo Guerreiro com os seus atributos
-                jogador = new Guerreiro("Guerreiro", (short)60, (short)12, (short)10, (short)1, inventarioInicial);
+                jogador = new Guerreiro("Guerreiro", (short) 60, (short) 12, (short) 10, (short) 1, inventarioInicial);
                 System.out.println("\nVocê escolheu ser um Guerreiro!");
                 escolhaClasse = false;
-            }
-            else if (opcao == 2) {
+            } else if (opcao == 2) {
                 // Cria um objeto do tipo Mago com os seus atributos
-                jogador = new Mago("Mago", (short)45, (short)15, (short)7, (short)1, inventarioInicial);
+                jogador = new Mago("Mago", (short) 45, (short) 15, (short) 7, (short) 1, inventarioInicial);
                 System.out.println("\nVocê escolheu ser um Mago!");
                 escolhaClasse = false;
-            }
-            else if (opcao == 3) {
+            } else if (opcao == 3) {
                 // Cria um objeto do tipo Arqueiro com os seus atributos
-                jogador = new Arqueiro("Arqueiro", (short)50, (short)13, (short)8, (short)1, inventarioInicial);
+                jogador = new Arqueiro("Arqueiro", (short) 50, (short) 13, (short) 8, (short) 1, inventarioInicial);
                 System.out.println("\nVocê escolheu ser um Arqueiro!");
                 escolhaClasse = false;
-            }
-            else {
+            } else {
                 System.out.println("Opção inválida. Tente novamente!");
             }
         }
@@ -103,7 +100,6 @@ public class Jogo {
 
         // salvar se ja foi ou não explorado
         boolean montanhaExplorada = false;
-
 
 
         while (explorando) {
@@ -151,7 +147,7 @@ public class Jogo {
                     if (escolha == 1 && !trilhaEsquerdaExplorada) {
                         System.out.println("\nVocê segue pela trilha da esquerda...");
                         System.out.println("Das sombras surge um zumbi!");
-                        Inimigo zumbi = new Inimigo("Zumbi", (short)20, (short)8, (short)3, (short)1, new Inventario());
+                        Inimigo zumbi = new Inimigo("Zumbi", (short) 20, (short) 8, (short) 3, (short) 1, new Inventario());
                         batalhar(jogador, zumbi, br, "Floresta Nebulosa");
                         trilhaEsquerdaExplorada = true;
                     }
@@ -169,7 +165,7 @@ public class Jogo {
 
                         System.out.println("Você recebeu o item: " + amuleto.getNome() + "!");
                         jogador.vidaMax += 10;
-                        jogador.curar((short)10);
+                        jogador.curar((short) 10);
 
                         trilhaCentralExplorada = true;
                     }
@@ -178,17 +174,13 @@ public class Jogo {
                     else if (escolha == 3 && !trilhaDireitaExplorada) {
                         System.out.println("\nVocê tenta sair rapidamente da trilha...");
                         System.out.println("Mas uma fera te avista e ataca!");
-                        Inimigo lobo = new Inimigo("Lobo Sombrio", (short)45, (short)10, (short)4, (short)1, new Inventario());
+                        Inimigo lobo = new Inimigo("Lobo Sombrio", (short) 45, (short) 10, (short) 4, (short) 1, new Inventario());
                         batalhar(jogador, lobo, br, "Floresta Nebulosa");
                         trilhaDireitaExplorada = true;
-                    }
-
-                    else if (escolha == 4) {
+                    } else if (escolha == 4) {
                         System.out.println("Você deixa a floresta para trás por enquanto.");
                         explorandoFloresta = false;
-                    }
-
-                    else {
+                    } else {
                         System.out.println("Opção inválida ou trilha já explorada.");
                     }
 
@@ -236,7 +228,7 @@ public class Jogo {
                     if (escolha == 1 && !tunelPrincipalExplorado) {
                         System.out.println("\nVocê avança pelo túnel principal...");
                         System.out.println("Do escuro surge um enorme Troll das Sombras!");
-                        Inimigo troll = new Inimigo("Troll das Sombras", (short)30, (short)12, (short)6, (short)2, new Inventario());
+                        Inimigo troll = new Inimigo("Troll das Sombras", (short) 30, (short) 12, (short) 6, (short) 2, new Inventario());
                         batalhar(jogador, troll, br, "Caverna das Sombras");
                         tunelPrincipalExplorado = true;
                     }
@@ -264,17 +256,13 @@ public class Jogo {
                         System.out.println("\nVocê chega a um lago subterrâneo de águas negras...");
                         System.out.println("Algo se move sob a superfície, uma Serpente das Profundezas aparece!");
 
-                        Inimigo serpente = new Inimigo("Serpente das Profundezas", (short)35, (short)14, (short)5, (short)2, new Inventario());
+                        Inimigo serpente = new Inimigo("Serpente das Profundezas", (short) 35, (short) 14, (short) 5, (short) 2, new Inventario());
                         batalhar(jogador, serpente, br, "Caverna das Sombras");
                         lagoSubterraneoExplorado = true;
-                    }
-
-                    else if (escolha == 4) {
+                    } else if (escolha == 4) {
                         System.out.println("Você sai da caverna e volta para a superfície.");
                         explorandoCaverna = false;
-                    }
-
-                    else {
+                    } else {
                         System.out.println("Opção inválida ou setor já explorado.");
                     }
 
@@ -347,7 +335,7 @@ public class Jogo {
 
                 System.out.println("O dragão Rex te aguarda no topo da montanha!");
 
-                Inimigo dragao = new Inimigo("Rex", (short)90, (short)20, (short)10, (short)5, new Inventario());
+                Inimigo dragao = new Inimigo("Rex", (short) 90, (short) 20, (short) 10, (short) 5, new Inventario());
                 batalhar(jogador, dragao, br, "Montanha Sombria");
 
                 System.out.println("\nAs chamas do dragão se apagam lentamente... você venceu uma batalha lendária!");
@@ -360,9 +348,7 @@ public class Jogo {
             else if (opcao == 5) {
                 System.out.println("\nVocê retorna ao menu principal.");
                 explorando = false;
-            }
-
-            else {
+            } else {
                 System.out.println("Opção inválida. Tente novamente.");
             }
         }
@@ -408,13 +394,26 @@ public class Jogo {
 
                 // Menu de possibilidade
                 switch (sorteio) {
-                    case 1: itemDropado = new Item("Poção de Cura", "Recupera vida", "+20 HP", 1); break;
-                    case 2: itemDropado = new Item("Raiz de Mirtilha", "Recupera vida", "+8 HP", 1); break;
-                    case 3: itemDropado = new Item("Amuleto Guardião", "Fornece alta proteção", "+20 defesa", 1); break;
-                    case 4: itemDropado = new Item("Escudo Velho", "Fornece leve proteção", "+5 defesa", 1); break;
-                    case 5: itemDropado = new Item("Orbe do Desespero", "Libera uma onda de energia que causa dano aos inimigos", "+30 ataque", 1); break;
-                    case 6: itemDropado = new Item("Poção de Fúria", "Uma poção que aumenta a força", "+12 ataque", 1); break;
-                    default: itemDropado = new Item("Item Desconhecido", "Você não sabe o que é isso", "???", 1);
+                    case 1:
+                        itemDropado = new Item("Poção de Cura", "Recupera vida", "+20 HP", 1);
+                        break;
+                    case 2:
+                        itemDropado = new Item("Raiz de Mirtilha", "Recupera vida", "+8 HP", 1);
+                        break;
+                    case 3:
+                        itemDropado = new Item("Amuleto Guardião", "Fornece alta proteção", "+20 defesa", 1);
+                        break;
+                    case 4:
+                        itemDropado = new Item("Escudo Velho", "Fornece leve proteção", "+5 defesa", 1);
+                        break;
+                    case 5:
+                        itemDropado = new Item("Orbe do Desespero", "Libera uma onda de energia que causa dano aos inimigos", "+30 ataque", 1);
+                        break;
+                    case 6:
+                        itemDropado = new Item("Poção de Fúria", "Uma poção que aumenta a força", "+12 ataque", 1);
+                        break;
+                    default:
+                        itemDropado = new Item("Item Desconhecido", "Você não sabe o que é isso", "???", 1);
                 }
 
                 System.out.println("O inimigo deixou cair: " + itemDropado.getNome() + "!");
@@ -445,19 +444,19 @@ public class Jogo {
                 }
             }
 
-            if (inimigo.nome.contains("Rex")){
+            if (inimigo.nome.contains("Rex")) {
                 jogador.nivel += 5;
                 System.out.println("\nVocê subiu 5 níveis!");
-                } else if(inimigo.nome.contains("Zumbi")){
+            } else if (inimigo.nome.contains("Zumbi")) {
                 jogador.nivel += 1;
                 System.out.println("\nVocê subiu 1 nível!");
-            } else if(inimigo.nome.contains("Troll das Sombras")){
+            } else if (inimigo.nome.contains("Troll das Sombras")) {
                 jogador.nivel += 2;
                 System.out.println("\nVocê subiu 2 níveis!");
-            } else if(inimigo.nome.contains("Lobo Sombrio")){
+            } else if (inimigo.nome.contains("Lobo Sombrio")) {
                 jogador.nivel += 3;
                 System.out.println("\nVocê subiu 3 níveis!");
-            } else{
+            } else {
                 jogador.nivel += 1;
                 System.out.println("\nVocê subiu 1 nível!");
             }
@@ -503,18 +502,16 @@ public class Jogo {
             /// ITENS DE CURA
             // Contains não sabe diferencias com ou sem cento por isso preciso colocar os dois
             if (nomeItem.contains("poção de cura") || nomeItem.contains("pocao de cura")) {
-                jogador.curar((short)20);
-            }
-            else if (nomeItem.contains("mirtilha")) {
-                jogador.curar((short)8);
+                jogador.curar((short) 20);
+            } else if (nomeItem.contains("mirtilha")) {
+                jogador.curar((short) 8);
             }
 
             /// ITENS DE DEFESA
             else if (nomeItem.contains("amuleto guardião") || nomeItem.contains("amuleto guardiao")) {
                 jogador.defesa += 20;
                 System.out.println("Você ganhou 20 pontos de defesa! Defesa atual: " + jogador.defesa + "\n");
-            }
-            else if (nomeItem.contains("escudo")) {
+            } else if (nomeItem.contains("escudo")) {
                 jogador.defesa += 5;
                 System.out.println("Você ganhou 5 pontos de defesa! Defesa atual: " + jogador.defesa + "\n");
             }
@@ -523,20 +520,16 @@ public class Jogo {
             else if (nomeItem.contains("orbe do desespero")) {
                 inimigo.pontosVida -= 8;
                 System.out.println("Você libera uma onda de energia! O inimigo perde 8 de vida. HP inimigo: " + inimigo.pontosVida + "\n");
-            }
-            else if (nomeItem.contains("fúria") || nomeItem.contains("furia")) {
+            } else if (nomeItem.contains("fúria") || nomeItem.contains("furia")) {
                 jogador.ataque += 12;
                 System.out.println("Você entra em fúria! +12 de ataque. Ataque atual: " + jogador.ataque + "\n");
-            }
-            else if (nomeItem.contains("elixir do vento")) {
+            } else if (nomeItem.contains("elixir do vento")) {
                 inimigo.congelar(1);
                 System.out.println("Você congela o inimigo por um turno!\n");
-            }
-            else if (nomeItem.contains("flecha")) {
+            } else if (nomeItem.contains("flecha")) {
                 inimigo.pontosVida -= 5;
                 System.out.println("Você dispara a Flecha Envenenada! O inimigo perde 5 pontos de vida.\n");
-            }
-            else if (nomeItem.contains("faca")) {
+            } else if (nomeItem.contains("faca")) {
                 inimigo.pontosVida -= 5;
                 System.out.println("Você golpeia o inimigo com sua faca e causa 5 pontos de dano!\n");
             }
@@ -545,18 +538,15 @@ public class Jogo {
             else if (nomeItem.contains("espada do crepúsculo") || nomeItem.contains("espada do crepusculo")) {
                 jogador.ataque += 30;
                 System.out.println("O poder do crepúsculo flui através de você! +30 de ataque. Ataque atual: " + jogador.ataque + "\n");
-            }
-            else if (nomeItem.contains("armadura do guardião") || nomeItem.contains("armadura do guardiao")) {
+            } else if (nomeItem.contains("armadura do guardião") || nomeItem.contains("armadura do guardiao")) {
                 jogador.defesa += 25;
                 System.out.println("Os espíritos protetores o envolvem! +25 de defesa. Defesa atual: " + jogador.defesa + "\n");
-            }
-            else if (nomeItem.contains("anel da eternidade")) {
+            } else if (nomeItem.contains("anel da eternidade")) {
                 jogador.vidaMax += 100;   // aumenta o HP máximo
-                jogador.curar((short)100); // recupera até o novo máximo
+                jogador.curar((short) 100); // recupera até o novo máximo
                 System.out.println("O poder do Anel da Eternidade flui em você! +100 de Vida Máxima.");
                 System.out.println("HP atual: " + jogador.pontosVida + "/" + jogador.vidaMax + "\n");
-            }
-            else if (nomeItem.contains("orbe das almas")) {
+            } else if (nomeItem.contains("orbe das almas")) {
                 jogador.ataque += 15;
                 jogador.defesa += 10;
                 System.out.println("As almas derrotadas fortalecem você! +15 de ataque, +10 de defesa.\n");
@@ -576,7 +566,7 @@ public class Jogo {
                         break;
                     case 2:
                         jogador.vidaMax += 30; // aumenta o limite
-                        jogador.curar((short)30); // cura até esse novo máximo
+                        jogador.curar((short) 30); // cura até esse novo máximo
                         System.out.println("Você sente uma força vital inexplicável! +30 de Vida Máxima.");
                         System.out.println("HP atual: " + jogador.pontosVida + "/" + jogador.vidaMax + "\n");
                         break;
@@ -598,32 +588,12 @@ public class Jogo {
         }
     }
 
-    // FUGIR DE UMA BATALHA
+    /// FUGIR DE UMA BATALHA
     public static void fugir(Personagem jogador, BufferedReader br, String local) throws IOException {
         System.out.println("\nVocê tenta fugir...");
 
         Random random = new Random();
         int rolagem = random.nextInt(6) + 1;
-
-        if (rolagem % 2 == 0) {
-            System.out.println("Você consegue escapar com sucesso!");
-            System.out.println("Você respira aliviado e continua sua jornada.");
-        } else {
-            System.out.println("Você tropeça ao tentar fugir!");
-            System.out.println("O inimigo te alcança e acerta um golpe antes de você escapar!");
-
-            short dano = 8; // dano ligeiramente menor para equilibrar
-            jogador.receberDano(dano);
-            System.out.println("Você perdeu " + dano + " pontos de vida. HP atual: " + jogador.pontosVida);
-
-            if (!jogador.estaVivo()) {
-                System.out.println("\nVocê não resistiu ao golpe durante a fuga...");
-                System.out.println("Fim de jogo!");
-                System.exit(0);
-            } else {
-                System.out.println("Mesmo ferido, você consegue se afastar do perigo.");
-            }
-        }
 
         String esconderijo;
 
@@ -639,6 +609,33 @@ public class Jogo {
             esconderijo = "em um canto seguro";
         }
 
-        System.out.println("\nVocê se esconde " + esconderijo + " por um certo tempo e logo retoma a exploração.");
+        System.out.println("Você se esconde " + esconderijo + " por um certo tempo e logo retoma a exploração.");
+
+        if (rolagem % 2 == 0) {
+            System.out.println("Você respira aliviado e continua sua jornada.");
+            System.out.println("Você consegue escapar com sucesso!");
+        } else {
+            System.out.println("Você tropeça ao tentar fugir!");
+            System.out.println("O inimigo te alcança e acerta um golpe antes de você escapar!");
+
+            short dano = 8; // dano ligeiramente menor para equilibrar
+            jogador.receberDano(dano);
+            System.out.println("Você perdeu " + dano + " pontos de vida. HP atual: " + jogador.pontosVida);
+
+            // Mostra status completo após levar dano
+            System.out.println("\n=== STATUS APÓS A TENTATIVA DE FUGA ===");
+            System.out.println(jogador);
+            System.out.println("=======================================\n");
+
+            if (!jogador.estaVivo()) {
+                System.out.println("\nVocê não resistiu ao golpe durante a fuga...");
+                System.out.println("Fim de jogo!");
+                System.exit(0);
+            } else {
+                System.out.println("Mesmo ferido, você consegue se afastar do perigo.");
+                System.out.println("Você respira aliviado e continua sua jornada.");
+                System.out.println("Você consegue escapar com sucesso!");
+            }
+        }
     }
 }

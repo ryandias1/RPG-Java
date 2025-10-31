@@ -192,13 +192,7 @@ abstract class Personagem {
 
             else if (escolha == 2) {
                 Jogo.fugir(this, br, local);
-
-                if (this.estaVivo()) {
-                    System.out.println("\nVocê conseguiu escapar da batalha!");
-                    return false;
-                } else {
-                    return false;
-                }
+                return false; // já imprime tudo dentro de fugir()
             }
 
             else {
